@@ -6,18 +6,14 @@ CREATE table tb_student
 (
     id           BIGSERIAL PRIMARY KEY NOT NULL,
     name         VARCHAR(20)           NOT NULL,
-    first_name    VARCHAR(20)           NOT NULL,
-    created      TIMESTAMP             NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated      TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP
+    surname    VARCHAR(20)           NOT NULL
 );
 
 CREATE table tb_teacher
 (
     id           BIGSERIAL PRIMARY KEY NOT NULL,
     name         VARCHAR(20)           NOT NULL,
-    first_name    VARCHAR(20)           NOT NULL,
-    created      TIMESTAMP             NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated      TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP
+    surname    VARCHAR(20)           NOT NULL
 );
 
 CREATE table tb_course
@@ -25,8 +21,6 @@ CREATE table tb_course
     id           BIGSERIAL PRIMARY KEY NOT NULL,
     name         VARCHAR(20)           NOT NULL,
     teacher_id   BIGINT                ,
-    created      TIMESTAMP             NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated      TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (teacher_id) REFERENCES tb_teacher (id)
 );
 
@@ -36,9 +30,7 @@ CREATE table tb_qualification
     score        INT          NOT NULL default -1,
     course_id    BIGINT                NOT NULL,
     student_id   BIGINT                NOT NULL,
-    created      TIMESTAMP             NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated      TIMESTAMP                      DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (course_id) REFERENCES tb_course (id),
-    FOREIGN KEY (student_id) REFERENCES tb_course (id)
+    FOREIGN KEY (student_id) REFERENCES tb_student (id)
 );
 

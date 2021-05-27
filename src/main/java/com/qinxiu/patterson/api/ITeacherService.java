@@ -11,6 +11,4 @@ public interface ITeacherService {
   int remove(Teacher teacher);
 
   Teacher get(Long id);
-
-  Teacher getByCourseId(Long courseId);
 }

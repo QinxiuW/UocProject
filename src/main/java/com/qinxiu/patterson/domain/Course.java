@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,14 +40,14 @@ public class Course implements Serializable {
   private Long teacherId;
 
   /**
-   * Create date time.
+   * Teacher's object (one to one).
    */
-  @TableField(value = "created")
-  private Date created;
+  @TableField(exist = false)
+  private Teacher teacher;
 
   /**
-   * Last update date time.
+   * Qualification of all student in the current course(one to many).
    */
-  @TableField(value = "updated")
-  private Date updated;
+  @TableField(exist = false)
+  private List<Qualification> qualifications;
 }

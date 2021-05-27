@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qinxiu.patterson.mapper.QualificationMapper">
+<mapper namespace="com.qinxiu.patterson.mapper.IQualificationMapper">
   <resultMap id="BaseResultMap" type="com.qinxiu.patterson.domain.Qualification">
-    <!--@mbg.generated-->
-    <!--@Table tb_qualification-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="course_id" jdbcType="BIGINT" property="courseId" />
     <result column="student_id" jdbcType="BIGINT" property="studentId" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, score, course_id, student_id, created, updated
-  </sql>
+
+  <resultMap id="q_s_s" type="com.qinxiu.patterson.domain.Qualification">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <association property="course" column="course_id"
+      select="com.qinxiu.patterson.mapper.ICourseMapper.selectById"/>
+    <association property="student" column="student_id"
+      select="com.qinxiu.patterson.mapper.IStudentMapper.selectById"/>
+  </resultMap>
+
+  <select id="selectLinkById" resultMap="q_s_s">
+    select *
+    from tb_qualification
+    where id = #{id}
+  </select>
 </mapper>

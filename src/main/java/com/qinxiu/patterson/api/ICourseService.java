@@ -1,7 +1,6 @@
 package com.qinxiu.patterson.api;
 
 import com.qinxiu.patterson.domain.Course;
-import java.util.List;
 
 public interface ICourseService {
 
@@ -13,7 +12,5 @@ public interface ICourseService {
 
   Course get(Long id);
 
-  List<Course> getByStudentId(Long StudentId);
-
-  List<Course> getByTeacherId(Long TeacherId);
+  Course get(String name);
 }

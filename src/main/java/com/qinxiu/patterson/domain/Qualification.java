@@ -39,20 +39,20 @@ public class Qualification {
   private Long courseId;
 
   /**
+   * Course's object (one to one).
+   */
+  @TableField(exist = false)
+  private Course course;
+
+  /**
    * Student's id as foreign key.
    */
   @TableField(value = "student_id")
   private Long studentId;
 
   /**
-   * Create date time.
+   * Student's object (one to one)
    */
-  @TableField(value = "created")
-  private Date created;
-
-  /**
-   * Last update date time.
-   */
-  @TableField(value = "updated")
-  private Date updated;
+  @TableField(exist = false)
+  private Student student;
 }

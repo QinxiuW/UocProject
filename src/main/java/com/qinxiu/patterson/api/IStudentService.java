@@ -13,7 +13,4 @@ public interface IStudentService {
   int remove(Student student);
 
   Student get(Long id);
-
-  List<Student> getByCourseId(Long courseId);
-
 }

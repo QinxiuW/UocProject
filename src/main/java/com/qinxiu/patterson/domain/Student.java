@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,18 +35,12 @@ public class Student {
   /**
    * Student's first name.
    */
-  @TableField(value = "first_name")
-  private String firstName;
+  @TableField(value = "surname")
+  private String surname;
 
   /**
-   * Create date time.
+   * Qualification of all student in the current course(one to many).
    */
-  @TableField(value = "created")
-  private Date created;
-
-  /**
-   * Last update date time.
-   */
-  @TableField(value = "updated")
-  private Date updated;
+  @TableField(exist = false)
+  private List<Qualification> qualifications;
 }

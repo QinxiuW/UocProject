@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qinxiu.patterson.mapper.CourseMapper">
+<mapper namespace="com.qinxiu.patterson.mapper.ICourseMapper">
   <resultMap id="BaseResultMap" type="com.qinxiu.patterson.domain.Course">
-    <!--@mbg.generated-->
-    <!--@Table tb_course-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, "name", teacher_id, created, updated
-  </sql>
+
+  <resultMap id="c_t_q" type="com.qinxiu.patterson.domain.Course">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
+    <association property="teacher" column="teacher_id"
+      select="com.qinxiu.patterson.mapper.ITeacherMapper.selectById"/>
+    <collection property="qualifications" column="id"
+      select="com.qinxiu.patterson.mapper.IQualificationMapper.selectByCourseId"/>
+  </resultMap>
+
+  <select id="selectLinkById" resultMap="c_t_q">
+    select *
+    from tb_course
+    where id = #{id}
+  </select>
 </mapper>

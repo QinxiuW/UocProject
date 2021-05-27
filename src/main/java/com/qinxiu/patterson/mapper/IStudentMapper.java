@@ -5,4 +5,6 @@ import com.qinxiu.patterson.domain.Student;
 
 
 public interface IStudentMapper extends BaseMapper<Student> {
+
+  Student selectLinkById(Long id);
 }

@@ -13,9 +13,4 @@ public interface IQualificationService {
   int remove(Qualification qualification);
 
   Qualification get(Long id);
-
-  List<Qualification> getByCourseId(Long courseId);
-
-  List<Qualification> getByStudentId(Long studentId);
-
 }

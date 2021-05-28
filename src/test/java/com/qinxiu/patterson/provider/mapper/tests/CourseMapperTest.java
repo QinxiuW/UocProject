@@ -1,14 +1,14 @@
-package com.qinxiu.patterson.mapper.tests;
+package com.qinxiu.patterson.provider.mapper.tests;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.qinxiu.patterson.domain.Course;
-import com.qinxiu.patterson.domain.Qualification;
-import com.qinxiu.patterson.domain.Student;
-import com.qinxiu.patterson.domain.Teacher;
-import com.qinxiu.patterson.mapper.ICourseMapper;
-import com.qinxiu.patterson.mapper.IQualificationMapper;
-import com.qinxiu.patterson.mapper.IStudentMapper;
-import com.qinxiu.patterson.mapper.ITeacherMapper;
+import com.qinxiu.patterson.provider.domain.Course;
+import com.qinxiu.patterson.provider.domain.Qualification;
+import com.qinxiu.patterson.provider.domain.Student;
+import com.qinxiu.patterson.provider.domain.Teacher;
+import com.qinxiu.patterson.provider.mapper.ICourseMapper;
+import com.qinxiu.patterson.provider.mapper.IQualificationMapper;
+import com.qinxiu.patterson.provider.mapper.IStudentMapper;
+import com.qinxiu.patterson.provider.mapper.ITeacherMapper;
 import javax.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

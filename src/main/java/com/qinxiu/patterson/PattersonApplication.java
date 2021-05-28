@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.qinxiu.patterson.mapper")
+@MapperScan("com.qinxiu.patterson.provider.mapper")
 public class PattersonApplication {
 
   public static void main(String[] args) {

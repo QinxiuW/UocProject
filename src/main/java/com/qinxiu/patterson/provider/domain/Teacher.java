@@ -1,11 +1,10 @@
-package com.qinxiu.patterson.domain;
+package com.qinxiu.patterson.provider.domain;
+
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,36 +17,30 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@TableName(value = "tb_course")
-public class Course implements Serializable {
+@TableName(value = "tb_teacher")
+public class Teacher {
 
   /**
-   * Course's Id.
+   * Teacher's id.
    */
   @TableId(value = "id", type = IdType.AUTO)
   private Long id;
 
   /**
-   * Course's name.
+   * Teacher's name.
    */
   @TableField(value = "name")
   private String name;
 
   /**
-   * Teacher's id as foreign key.
+   * Teacher's first name.
    */
-  @TableField(value = "teacher_id")
-  private Long teacherId;
+  @TableField(value = "surname")
+  private String surname;
 
   /**
-   * Teacher's object (one to one).
+   * List of courses (one to many).
    */
   @TableField(exist = false)
-  private Teacher teacher;
-
-  /**
-   * Qualification of all student in the current course(one to many).
-   */
-  @TableField(exist = false)
-  private List<Qualification> qualifications;
+  private List<Course> courses;
 }

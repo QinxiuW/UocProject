@@ -1,7 +1,7 @@
-package com.qinxiu.patterson.mapper;
+package com.qinxiu.patterson.provider.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qinxiu.patterson.domain.Qualification;
+import com.qinxiu.patterson.provider.domain.Qualification;
 import java.util.List;
 import org.apache.ibatis.annotations.Select;
 

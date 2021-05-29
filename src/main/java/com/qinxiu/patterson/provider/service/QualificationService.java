@@ -26,7 +26,7 @@ public class QualificationService implements IQualificationService {
     if (qualification == null) {
       return 0;
     }
-    if (qualificationMapper.selectById(qualification.getId()) == null) {
+    if (qualificationMapper.selectLinkById(qualification.getId()) == null) {
       return 0;
     }
     return qualificationMapper.updateById(qualification);
@@ -45,7 +45,7 @@ public class QualificationService implements IQualificationService {
     if (id == null) {
       return null;
     }
-    return qualificationMapper.selectById(id);
+    return qualificationMapper.selectLinkById(id);
   }
 
   @Override
@@ -56,15 +56,4 @@ public class QualificationService implements IQualificationService {
     return qualificationMapper.selectByStudentAndCourse(studentId,courseId);
   }
 
-  @Override
-  public List<Qualification> getQualificationsByCourse(Long courseId) {
-
-    return qualificationMapper.selectByCourseId(courseId);
-  }
-
-  @Override
-  public List<Qualification> getQualificationsByStudent(Long studentId) {
-
-    return qualificationMapper.selectByStudentId(studentId);
-  }
 }

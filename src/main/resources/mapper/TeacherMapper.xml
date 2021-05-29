@@ -15,4 +15,8 @@
     from tb_teacher
     where id = #{id}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from tb_teacher
+  </select>
 </mapper>

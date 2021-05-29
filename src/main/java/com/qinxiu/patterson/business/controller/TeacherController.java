@@ -56,53 +56,53 @@ public class TeacherController {
 
 
 
-  @GetMapping(value = "qualifications")
-  public ResponseResult<Map<String, List<Qualification>>> getQualifications(
-      @RequestParam Long teacherID) {
+//  @GetMapping(value = "qualifications")
+//  public ResponseResult<Map<String, List<Qualification>>> getQualifications(
+//      @RequestParam Long teacherID) {
+//
+//    // find courses
+//    var courses = courseService.getCourseByTeacherId(teacherID);
+//
+//    if (courses == null) {
+//      throw new BusinessException(BusinessStatus.COURSE_NOT_FOUND);
+//    }
+//    // loop the courses and find its qualifications
+//    Map<String, List<Qualification>> qualificationsMap = new HashMap<>();
+//
+//    for (var course : courses) {
+//      var qualifications = qualificationService.getQualificationsByCourse(course.getId());
+//      if (!qualificationsMap.containsKey(course.getName())) {
+//        qualificationsMap.put(course.getName(), qualifications);
+//      }
+//    }
+//    return ResponseResult.<Map<String, List<Qualification>>>builder()
+//        .message(BusinessStatus.OK.getMessage())
+//        .code(BusinessStatus.OK.getCode())
+//        .data(qualificationsMap).build();
+//  }
 
-    // find courses
-    var courses = courseService.getCourseByTeacherId(teacherID);
-
-    if (courses == null) {
-      throw new BusinessException(BusinessStatus.COURSE_NOT_FOUND);
-    }
-    // loop the courses and find its qualifications
-    Map<String, List<Qualification>> qualificationsMap = new HashMap<>();
-
-    for (var course : courses) {
-      var qualifications = qualificationService.getQualificationsByCourse(course.getId());
-      if (!qualificationsMap.containsKey(course.getName())) {
-        qualificationsMap.put(course.getName(), qualifications);
-      }
-    }
-    return ResponseResult.<Map<String, List<Qualification>>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(qualificationsMap).build();
-  }
-
-  @GetMapping(value = "getQualifications")
-  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherID, @RequestParam Long courseID){
-
-    // check if this teacher has applied to this course
-    var courses = courseService.getCourseByTeacherId(teacherID);
-    boolean isApplied = false;
-    for(var course : courses){
-      if(course.getId().equals(courseID)) {
-        isApplied = true;
-        break;
-      }
-    }
-
-    if(!isApplied){
-      throw new BusinessException(BusinessStatus.COURSE_PERMISSION_DENIED);
-    }
-    var qualifications = qualificationService.getQualificationsByCourse(courseID);
-    return ResponseResult.<List<Qualification>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(qualifications).build();
-  }
+//  @GetMapping(value = "getQualifications")
+//  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherID, @RequestParam Long courseID){
+//
+//    // check if this teacher has applied to this course
+//    var courses = courseService.getCourseByTeacherId(teacherID);
+//    boolean isApplied = false;
+//    for(var course : courses){
+//      if(course.getId().equals(courseID)) {
+//        isApplied = true;
+//        break;
+//      }
+//    }
+//
+//    if(!isApplied){
+//      throw new BusinessException(BusinessStatus.COURSE_PERMISSION_DENIED);
+//    }
+//    var qualifications = qualificationService.getQualificationsByCourse(courseID);
+//    return ResponseResult.<List<Qualification>>builder()
+//        .message(BusinessStatus.OK.getMessage())
+//        .code(BusinessStatus.OK.getCode())
+//        .data(qualifications).build();
+//  }
 
   @PostMapping(value = "markQualification")
   public ResponseResult<Void> markQualification(@RequestParam Long courseID, @RequestParam Long studentID,@RequestParam int score){
@@ -122,10 +122,6 @@ public class TeacherController {
     }
     throw new BusinessException(BusinessStatus.QUALIFICATION_MARK_FAILED);
   }
-
-
-
-
 
   @GetMapping(value = "/ping")
   public String ping(){

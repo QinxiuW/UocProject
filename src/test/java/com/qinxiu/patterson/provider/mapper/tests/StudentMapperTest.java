@@ -61,7 +61,7 @@ public class StudentMapperTest {
     Assertions.assertNotNull(student);
 
     // get by id
-    student = studentMapper.selectById(student.getId());
+    student = studentMapper.selectLinkById(student.getId());
     Assertions.assertNotNull(student);
 
     // get by id include Qualifications object
@@ -70,7 +70,7 @@ public class StudentMapperTest {
     Assertions.assertNotNull(student.getQualifications());
 
     // get all
-    var students = studentMapper.selectList(Wrappers.<Student>lambdaQuery().select());
+    var students = studentMapper.selectAll();
     Assertions.assertNotNull(students);
   }
 

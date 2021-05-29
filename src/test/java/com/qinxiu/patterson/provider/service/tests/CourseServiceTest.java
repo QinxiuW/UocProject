@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
+import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -69,7 +70,7 @@ public class CourseServiceTest {
   @Test
   void update_success() {
     // Arrange
-    Mockito.when(courseMapper.selectById(anyLong())).thenReturn(mockCourse);
+    Mockito.when(courseMapper.selectLinkById(anyLong())).thenReturn(mockCourse);
     Mockito.when(courseMapper.updateById(any(Course.class))).thenReturn(1);
 
     // Act
@@ -77,7 +78,7 @@ public class CourseServiceTest {
 
     // Assert
     Assertions.assertEquals(1, result);
-    Mockito.verify(courseMapper, Mockito.times(1)).selectById(anyLong());
+    Mockito.verify(courseMapper, Mockito.times(1)).selectLinkById(anyLong());
     Mockito.verify(courseMapper, Mockito.times(1)).updateById(any(Course.class));
   }
 
@@ -90,28 +91,28 @@ public class CourseServiceTest {
 
     // Assert
     Assertions.assertEquals(0, result);
-    Mockito.verify(courseMapper, Mockito.times(0)).selectById(anyLong());
+    Mockito.verify(courseMapper, Mockito.times(0)).selectLinkById(anyLong());
     Mockito.verify(courseMapper, Mockito.times(0)).updateById(any(Course.class));
   }
 
   @Test
   void update_failed_by_no_course_found() {
     // Arrange
-    Mockito.when(courseMapper.selectById(anyLong())).thenReturn(null);
+    Mockito.when(courseMapper.selectLinkById(anyLong())).thenReturn(null);
 
     // Act
     var result = courseService.update(mockCourse);
 
     // Assert
     Assertions.assertEquals(0, result);
-    Mockito.verify(courseMapper, Mockito.times(1)).selectById(anyLong());
+    Mockito.verify(courseMapper, Mockito.times(1)).selectLinkById(anyLong());
     Mockito.verify(courseMapper, Mockito.times(0)).updateById(any(Course.class));
   }
 
   @Test
   void update_failed_by_return_value() {
     // Arrange
-    Mockito.when(courseMapper.selectById(anyLong())).thenReturn(mockCourse);
+    Mockito.when(courseMapper.selectLinkById(anyLong())).thenReturn(mockCourse);
     Mockito.when(courseMapper.updateById(any(Course.class))).thenReturn(0);
 
     // Act
@@ -119,7 +120,7 @@ public class CourseServiceTest {
 
     // Assert
     Assertions.assertEquals(0, result);
-    Mockito.verify(courseMapper, Mockito.times(1)).selectById(anyLong());
+    Mockito.verify(courseMapper, Mockito.times(1)).selectLinkById(anyLong());
     Mockito.verify(courseMapper, Mockito.times(1)).updateById(any(Course.class));
   }
 
@@ -164,14 +165,14 @@ public class CourseServiceTest {
   @Test
   void get_success(){
     // Arrange
-    Mockito.when(courseMapper.selectById(anyLong())).thenReturn(mockCourse);
+    Mockito.when(courseMapper.selectLinkById(anyLong())).thenReturn(mockCourse);
 
     // Act
     var result = courseService.get(anyLong());
 
     // Assert
     Assertions.assertEquals(mockCourse, result);
-    Mockito.verify(courseMapper,Mockito.times(1)).selectById(anyLong());
+    Mockito.verify(courseMapper,Mockito.times(1)).selectLinkById(anyLong());
   }
 
   @Test
@@ -183,59 +184,87 @@ public class CourseServiceTest {
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(courseMapper,Mockito.times(0)).selectById(anyLong());
+    Mockito.verify(courseMapper,Mockito.times(0)).selectLinkById(anyLong());
   }
 
   @Test
   void get_failed_by_return_value(){
     // Arrange
-    Mockito.when(courseMapper.selectById(anyLong())).thenReturn(null);
+    Mockito.when(courseMapper.selectLinkById(anyLong())).thenReturn(null);
 
     // Act
     var result = courseService.get(anyLong());
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(courseMapper,Mockito.times(1)).selectById(anyLong());
+    Mockito.verify(courseMapper,Mockito.times(1)).selectLinkById(anyLong());
   }
 
   @Test
-  void getByName_success(){
+  void getAll_success(){
     // Arrange
-    Mockito.when(courseMapper.selectOne(any())).thenReturn(mockCourse);
+    var courseList = new ArrayList<Course>() {{add(mockCourse);}};
+    Mockito.when(courseMapper.selectAll()).thenReturn(courseList);
 
     // Act
-    // here we're not using anyString() because the empty string value is included.
-    var result = courseService.getByName("name");
+    var result = courseService.getAll();
 
     // Assert
-    Assertions.assertEquals(mockCourse, result);
-    Mockito.verify(courseMapper,Mockito.times(1)).selectOne(any());
+    Assertions.assertEquals(courseList, result);
+    Mockito.verify(courseMapper,Mockito.times(1)).selectAll();
   }
 
   @Test
-  void getByName_failed_by_empty_param(){
+  void getAll_failed_by_return_value(){
     // Arrange
+    Mockito.when(courseMapper.selectAll()).thenReturn(null);
 
     // Act
-    var result = courseService.getByName(null);
-
-    // Assert
-    Assertions.assertNull(result);
-    Mockito.verify(courseMapper,Mockito.times(0)).selectOne(any());
-  }
-
-  @Test
-  void getByName_failed_by_return_value(){
-    // Arrange
-    Mockito.when(courseMapper.selectOne(any())).thenReturn(null);
-
-    // Act
-    // here we're not using anyString() because the empty string value is included.
-    var result = courseService.getByName("name");
+    var result = courseService.getAll();
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(courseMapper,Mockito.times(1)).selectOne(any());
+    Mockito.verify(courseMapper,Mockito.times(1)).selectAll();
   }
+
+  @Test
+  void getCourseByTeacherId_success(){
+    // Arrange
+    var courseList = new ArrayList<Course>() {{add(mockCourse);}};
+    Mockito.when(courseMapper.selectByTeacherId(anyLong())).thenReturn(courseList);
+
+    // Act
+    var result = courseService.getCourseByTeacherId(anyLong());
+
+    // Assert
+    Assertions.assertEquals(courseList, result);
+    Mockito.verify(courseMapper,Mockito.times(1)).selectByTeacherId(anyLong());
+  }
+
+  @Test
+  void getCourseByTeacherId_failed_by_empty_param(){
+    // Arrange
+
+    // Act
+    var result = courseService.getCourseByTeacherId(null);
+
+    // Assert
+    Assertions.assertNull(result);
+    Mockito.verify(courseMapper,Mockito.times(0)).selectByTeacherId(anyLong());
+  }
+
+  @Test
+  void getCourseByTeacherId_failed_by_return_value(){
+    // Arrange
+    Mockito.when(courseMapper.selectByTeacherId(anyLong())).thenReturn(null);
+
+    // Act
+    var result = courseService.getCourseByTeacherId(anyLong());
+
+    // Assert
+    Assertions.assertNull(result);
+    Mockito.verify(courseMapper,Mockito.times(1)).selectByTeacherId(anyLong());
+  }
+
+
 }

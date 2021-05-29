@@ -72,8 +72,7 @@ public class QualificationMapperTest {
     Assertions.assertNotNull(qualification.getStudent());
 
     // get all
-    var qualifications = qualificationMapper
-        .selectList(Wrappers.<Qualification>lambdaQuery().select());
+    var qualifications = qualificationMapper.selectAll();
     Assertions.assertNotNull(qualifications);
 
     // get by courseId
@@ -87,6 +86,11 @@ public class QualificationMapperTest {
         Wrappers.<Student>lambdaQuery().eq(Student::getSurname, "studentSurname"));
     qualifications = qualificationMapper.selectByStudentId(student.getId());
     Assertions.assertNotNull(qualifications);
+
+    // get by studentId and CourseID
+    qualification = qualificationMapper.selectByStudentAndCourse(student.getId(),course.getId());
+    Assertions.assertNotNull(qualifications);
+
   }
 
   @Test

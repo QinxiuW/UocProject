@@ -10,8 +10,9 @@ public interface ICourseMapper extends BaseMapper<Course> {
 
   Course selectLinkById(Long id);
 
-  @Select("select * from tb_course where teacher_id = #{id}")
+//  @Select("select * from tb_course where teacher_id = #{id}")
   List<Course> selectByTeacherId(Long id);
 
 
+  List<Course> selectAll();
 }

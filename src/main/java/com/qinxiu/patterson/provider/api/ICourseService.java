@@ -13,8 +13,6 @@ public interface ICourseService {
 
   Course get(Long id);
 
-  Course getByName(String name);
-
   List<Course> getAll();
 
   List<Course> getCourseByTeacherId(Long teacherId);

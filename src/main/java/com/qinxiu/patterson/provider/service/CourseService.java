@@ -1,12 +1,10 @@
 package com.qinxiu.patterson.provider.service;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qinxiu.patterson.provider.api.ICourseService;
 import com.qinxiu.patterson.provider.domain.Course;
 import com.qinxiu.patterson.provider.mapper.ICourseMapper;
 import java.util.List;
 import javax.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +26,7 @@ public class CourseService implements ICourseService {
     if (course == null) {
       return 0;
     }
-    if (courseMapper.selectById(course.getId()) == null) {
+    if (courseMapper.selectLinkById(course.getId()) == null) {
       return 0;
     }
     return courseMapper.updateById(course);
@@ -47,26 +45,19 @@ public class CourseService implements ICourseService {
     if (id == null) {
       return null;
     }
-//    return courseMapper.selectLinkById(id);
-    return courseMapper.selectById(id);
-  }
-
-  @Override
-  public Course getByName(String name) {
-    if (name == null || name.isBlank()){
-      return null;
-    }
-    return courseMapper.selectOne(
-        Wrappers.<Course>lambdaQuery().eq(Course::getName, name));
+    return courseMapper.selectLinkById(id);
   }
 
   @Override
   public List<Course> getAll() {
-    return courseMapper.selectList(Wrappers.<Course>lambdaQuery().select());
+    return courseMapper.selectAll();
   }
 
   @Override
   public List<Course> getCourseByTeacherId(Long teacherId) {
+    if (teacherId ==null){
+      return null;
+    }
     return courseMapper.selectByTeacherId(teacherId);
   }
 }

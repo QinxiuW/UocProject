@@ -33,17 +33,17 @@ public class StudentController {
     }
     throw new BusinessException(BusinessStatus.COURSE_APPLICATION_ERROR);
   }
-
-  @GetMapping(value = "qualifications")
-  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
-
-
-    var qualifications = qualificationService.getQualificationsByStudent(studentID);
-    return ResponseResult.<List<Qualification>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(qualifications).build();
-  }
+//
+//  @GetMapping(value = "qualifications")
+//  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
+//
+//
+//    var qualifications = qualificationService.getQualificationsByStudent(studentID);
+//    return ResponseResult.<List<Qualification>>builder()
+//        .message(BusinessStatus.OK.getMessage())
+//        .code(BusinessStatus.OK.getCode())
+//        .data(qualifications).build();
+//  }
   @GetMapping(value = "/ping")
   public String ping(){
     return "pong";

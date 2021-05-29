@@ -9,12 +9,14 @@ public interface IQualificationMapper extends BaseMapper<Qualification> {
 
   Qualification selectLinkById(Long id);
 
-  @Select("select * from tb_qualification where course_id = #{id}")
+  List<Qualification> selectAll();
+
+//  @Select("select * from tb_qualification where course_id = #{id}")
   List<Qualification> selectByCourseId(Long id);
 
-  @Select("select * from tb_qualification where student_id = #{id}")
+//  @Select("select * from tb_qualification where student_id = #{id}")
   List<Qualification> selectByStudentId(Long id);
 
-  @Select("select * from tb_qualification where student_id = #{studentID} AND course_id = #{CourseID} ")
+//  @Select("select * from tb_qualification where student_id = #{studentID} AND course_id = #{CourseID} ")
   Qualification selectByStudentAndCourse(Long studentID, Long CourseID);
 }

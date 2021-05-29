@@ -18,4 +18,18 @@
     from tb_qualification
     where id = #{id}
   </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap">
+    select * from tb_qualification where course_id = #{id}
+  </select>
+
+  <select id="selectByStudentId" resultMap="BaseResultMap">
+    select * from tb_qualification where student_id = #{id}
+  </select>
+
+  <select id="selectByStudentAndCourse" resultMap="BaseResultMap">
+    select * from tb_qualification where student_id = #{studentID} AND course_id = #{CourseID}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from tb_qualification
+  </select>
 </mapper>

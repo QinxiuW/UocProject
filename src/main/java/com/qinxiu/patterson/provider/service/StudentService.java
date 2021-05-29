@@ -27,7 +27,7 @@ public class StudentService implements IStudentService {
     if (student == null) {
       return 0;
     }
-    if (studentMapper.selectById(student.getId()) == null) {
+    if (studentMapper.selectLinkById(student.getId()) == null) {
       return 0;
     }
     return studentMapper.updateById(student);
@@ -46,12 +46,11 @@ public class StudentService implements IStudentService {
     if (id == null) {
       return null;
     }
-//    return studentMapper.selectLinkById(id);
-    return studentMapper.selectById(id);
+    return studentMapper.selectLinkById(id);
   }
 
   @Override
   public List<Student> getAll() {
-    return studentMapper.selectList(Wrappers.<Student>lambdaQuery().select());
+    return studentMapper.selectAll();
   }
 }

@@ -26,7 +26,7 @@ public class TeacherMapperTest {
   private ICourseMapper courseMapper;
 
   @BeforeEach
-  void insert(){
+  void insert() {
     // insert teacher
     Teacher teacher = Teacher.builder().name("Juan").surname("MR").build();
     Assertions.assertEquals(1, teacherMapper.insert(teacher));
@@ -37,7 +37,7 @@ public class TeacherMapperTest {
   }
 
   @Test
-  void getTest(){
+  void getTest() {
     // get by name and surname
     var teacher = teacherMapper.selectOne(
         Wrappers.<Teacher>lambdaQuery().eq(Teacher::getName, "Juan")
@@ -45,7 +45,7 @@ public class TeacherMapperTest {
     Assertions.assertNotNull(teacher);
 
     // get by id
-    teacher = teacherMapper.selectById(teacher.getId());
+    teacher = teacherMapper.selectLinkById(teacher.getId());
     Assertions.assertNotNull(teacher);
 
     // get by id include Score object
@@ -54,12 +54,14 @@ public class TeacherMapperTest {
     Assertions.assertNotNull(teacher.getCourses());
 
     // get all
-    var teachers =  teacherMapper.selectList(Wrappers.<Teacher>lambdaQuery().select());
+    var teachers = teacherMapper.selectAll();
     Assertions.assertNotNull(teachers);
+
+
   }
 
   @Test
-  void updateTest(){
+  void updateTest() {
     // get by name and surname
     var teacher = teacherMapper.selectOne(
         Wrappers.<Teacher>lambdaQuery().eq(Teacher::getName, "Juan")
@@ -69,7 +71,7 @@ public class TeacherMapperTest {
     // update the teacher
     teacher.setName("teacherName");
     teacher.setSurname("teacherSurname");
-    Assertions.assertEquals(1,teacherMapper.updateById(teacher));
+    Assertions.assertEquals(1, teacherMapper.updateById(teacher));
 
     // check the updated teacher
     teacher = teacherMapper.selectOne(
@@ -79,7 +81,7 @@ public class TeacherMapperTest {
   }
 
   @Test
-  void deleteTest(){
+  void deleteTest() {
     // get by name and surname
     var teacher = teacherMapper.selectOne(
         Wrappers.<Teacher>lambdaQuery().eq(Teacher::getName, "Juan")
@@ -93,7 +95,7 @@ public class TeacherMapperTest {
     });
 
     // delete by id
-    Assertions.assertEquals(1,teacherMapper.deleteById(teacherId));
+    Assertions.assertEquals(1, teacherMapper.deleteById(teacherId));
 
     // check if still exists the deleted teacher
     teacher = teacherMapper.selectById(teacherId);

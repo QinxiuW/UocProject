@@ -60,7 +60,7 @@ public class CourseMapperTest {
     Assertions.assertNotNull(course);
 
     //get by id
-    course = courseMapper.selectById(course.getId());
+    course = courseMapper.selectLinkById(course.getId());
     Assertions.assertNotNull(course);
 
     //get by id include Teacher object & Qualifications object
@@ -70,8 +70,11 @@ public class CourseMapperTest {
     Assertions.assertNotNull(course.getQualifications());
 
     //get all
-    var courses = courseMapper.selectList(Wrappers.<Course>lambdaQuery().select());
+//    var courses = courseMapper.selectList(Wrappers.<Course>lambdaQuery().select());
+//    Assertions.assertNotNull(courses);
+    var courses = courseMapper.selectAll();
     Assertions.assertNotNull(courses);
+
 
     //get by teacherId
     Teacher teacher = teacherMapper
@@ -79,6 +82,7 @@ public class CourseMapperTest {
     courses = courseMapper.selectByTeacherId(teacher.getId());
     Assertions.assertNotNull(courses);
     Assertions.assertEquals("Math", courses.get(0).getName());
+
 
   }
 

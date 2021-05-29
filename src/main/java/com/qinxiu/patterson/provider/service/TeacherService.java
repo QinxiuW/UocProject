@@ -28,7 +28,7 @@ public class TeacherService implements ITeacherService {
     if (teacher == null) {
       return 0;
     }
-    Teacher old = teacherMapper.selectById(teacher.getId());
+    Teacher old = teacherMapper.selectLinkById(teacher.getId());
     if (old == null) {
       return 0;
     }
@@ -48,12 +48,11 @@ public class TeacherService implements ITeacherService {
     if (id == null) {
       return null;
     }
-//    return teacherMapper.selectLinkById(id);
-    return teacherMapper.selectById(id);
+    return teacherMapper.selectLinkById(id);
   }
 
   @Override
   public List<Teacher> getAll() {
-    return teacherMapper.selectList(Wrappers.<Teacher>lambdaQuery().select());
+    return teacherMapper.selectAll();
   }
 }

@@ -1,10 +1,14 @@
 package com.qinxiu.patterson.provider.service;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qinxiu.patterson.provider.api.IStudentService;
 import com.qinxiu.patterson.provider.domain.Student;
 import com.qinxiu.patterson.provider.mapper.IStudentMapper;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
+@Service
 public class StudentService implements IStudentService {
 
   @Resource
@@ -43,5 +47,10 @@ public class StudentService implements IStudentService {
       return null;
     }
     return studentMapper.selectLinkById(id);
+  }
+
+  @Override
+  public List<Student> getAll() {
+    return studentMapper.selectList(Wrappers.<Student>lambdaQuery().select());
   }
 }

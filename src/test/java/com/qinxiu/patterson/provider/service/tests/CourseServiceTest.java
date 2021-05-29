@@ -6,6 +6,7 @@ import com.qinxiu.patterson.provider.service.CourseService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -198,4 +199,43 @@ public class CourseServiceTest {
     Mockito.verify(courseMapper,Mockito.times(1)).selectLinkById(anyLong());
   }
 
+  @Test
+  void getByName_success(){
+    // Arrange
+    Mockito.when(courseMapper.selectOne(any())).thenReturn(mockCourse);
+
+    // Act
+    // here we're not using anyString() because the empty string value is included.
+    var result = courseService.getByName("name");
+
+    // Assert
+    Assertions.assertEquals(mockCourse, result);
+    Mockito.verify(courseMapper,Mockito.times(1)).selectOne(any());
+  }
+
+  @Test
+  void getByName_failed_by_empty_param(){
+    // Arrange
+
+    // Act
+    var result = courseService.getByName(null);
+
+    // Assert
+    Assertions.assertNull(result);
+    Mockito.verify(courseMapper,Mockito.times(0)).selectOne(any());
+  }
+
+  @Test
+  void getByName_failed_by_return_value(){
+    // Arrange
+    Mockito.when(courseMapper.selectOne(any())).thenReturn(null);
+
+    // Act
+    // here we're not using anyString() because the empty string value is included.
+    var result = courseService.getByName("name");
+
+    // Assert
+    Assertions.assertNull(result);
+    Mockito.verify(courseMapper,Mockito.times(1)).selectOne(any());
+  }
 }

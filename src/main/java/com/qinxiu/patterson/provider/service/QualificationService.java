@@ -4,7 +4,9 @@ import com.qinxiu.patterson.provider.api.IQualificationService;
 import com.qinxiu.patterson.provider.domain.Qualification;
 import com.qinxiu.patterson.provider.mapper.IQualificationMapper;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
+@Service
 public class QualificationService implements IQualificationService {
 
   @Resource

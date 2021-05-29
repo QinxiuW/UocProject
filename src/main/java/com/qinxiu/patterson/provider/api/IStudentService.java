@@ -1,6 +1,7 @@
 package com.qinxiu.patterson.provider.api;
 
 import com.qinxiu.patterson.provider.domain.Student;
+import java.util.List;
 
 public interface IStudentService {
 
@@ -11,4 +12,6 @@ public interface IStudentService {
   int delete(Long id);
 
   Student get(Long id);
+
+  List<Student> getAll();
 }

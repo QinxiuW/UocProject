@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qinxiu.patterson.provider.mapper.ICourseMapper">
-  <resultMap id="BaseResultMap" type="com.qinxiu.patterson.provider.domain.Course">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
-  </resultMap>
 
-  <resultMap id="c_t_q" type="com.qinxiu.patterson.provider.domain.Course">
+
+  <resultMap id="BaseResultMap" type="com.qinxiu.patterson.provider.domain.Course">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
@@ -17,7 +13,7 @@
       select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByCourseId"/>
   </resultMap>
 
-  <select id="selectLinkById" resultMap="c_t_q">
+  <select id="selectLinkById" resultMap="BaseResultMap">
     select *
     from tb_course
     where id = #{id}

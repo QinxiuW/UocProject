@@ -56,4 +56,12 @@ public class QualificationService implements IQualificationService {
     return qualificationMapper.selectByStudentAndCourse(studentId,courseId);
   }
 
+  @Override
+  public List<Qualification> getByCourseId(Long courseId) {
+    if (courseId == null) {
+      return null;
+    }
+    return qualificationMapper.selectByCourseId(courseId);
+  }
+
 }

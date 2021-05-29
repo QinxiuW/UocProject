@@ -7,6 +7,7 @@ import com.qinxiu.patterson.business.common.ResponseResult;
 import com.qinxiu.patterson.provider.api.IQualificationService;
 import com.qinxiu.patterson.provider.api.IStudentService;
 import com.qinxiu.patterson.provider.domain.Qualification;
+import com.qinxiu.patterson.provider.domain.Student;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +52,21 @@ public class StudentController {
         .data(student.getQualifications()).build();
   }
 
+  @GetMapping(value = "get")
+  public ResponseResult<Student> get(@RequestParam Long studentID) {
+
+    var student = studentService.get(studentID);
+    if (student == null) {
+      throw new BusinessException(BusinessStatus.STUDENT_NOT_FOUND);
+    }
+    return ResponseResult.<Student>builder()
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(student).build();
+  }
+
   @GetMapping(value = "/ping")
   public String ping() {
-    return "studentController pong";
+    return "studentContro pong";
   }
 }

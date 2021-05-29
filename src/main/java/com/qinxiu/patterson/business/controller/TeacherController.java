@@ -8,6 +8,7 @@ import com.qinxiu.patterson.provider.api.IQualificationService;
 import com.qinxiu.patterson.provider.api.ITeacherService;
 import com.qinxiu.patterson.provider.domain.Course;
 import com.qinxiu.patterson.provider.domain.Qualification;
+import com.qinxiu.patterson.provider.domain.Teacher;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,20 @@ public class TeacherController {
     throw new BusinessException(BusinessStatus.COURSE_APPLICATION_ERROR);
   }
 
+  @GetMapping(value = "")
+  public ResponseResult<Teacher> get(@RequestParam Long teacherID) {
+
+    // find teacher
+    var teacher = teacherService.get(teacherID);
+    if (teacher == null) {
+      throw new BusinessException(BusinessStatus.TEACHER_NOT_FOUND);
+    }
+
+    return ResponseResult.<Teacher>builder()
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(teacher).build();
+  }
 
   @GetMapping(value = "qualifications")
   public ResponseResult<Map<String, List<Qualification>>> getQualifications(
@@ -69,9 +84,11 @@ public class TeacherController {
     // loop the courses and find its qualifications
     Map<String, List<Qualification>> qualificationsMap = new HashMap<>();
 
-    for (var course : teacher.getCourses()) {
+    for (Course course : teacher.getCourses()) {
+     // find qualifications
+      var qualificaitons = qualificationService.getByCourseId(course.getId());
       if (!qualificationsMap.containsKey(course.getName())) {
-        qualificationsMap.put(course.getName(), course.getQualifications());
+        qualificationsMap.put(course.getName(), qualificaitons);
       }
     }
     return ResponseResult.<Map<String, List<Qualification>>>builder()
@@ -80,7 +97,7 @@ public class TeacherController {
         .data(qualificationsMap).build();
   }
 
-  @GetMapping(value = "getQualifications")
+  @GetMapping(value = "qualificationsByCourse")
   public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherID,
       @RequestParam Long courseID) {
 
@@ -97,11 +114,16 @@ public class TeacherController {
         courseRS = course;
       }
     }
+    if(courseRS == null){
+      throw new BusinessException(BusinessStatus.COURSE_PERMISSION_DENIED);
+    }
+
+    var qualificaitons = qualificationService.getByCourseId(courseID);
 
     return ResponseResult.<List<Qualification>>builder()
         .message(BusinessStatus.OK.getMessage())
         .code(BusinessStatus.OK.getCode())
-        .data(courseRS.getQualifications()).build();
+        .data(qualificaitons).build();
   }
 
   @GetMapping(value = "getCourses")

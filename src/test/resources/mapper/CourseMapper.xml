@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qinxiu.patterson.provider.mapper.ICourseMapper">
+
+
   <resultMap id="BaseResultMap" type="com.qinxiu.patterson.provider.domain.Course">
     <id column="id" jdbcType="BIGINT" property="id"/>
     <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -10,6 +12,11 @@
       select="com.qinxiu.patterson.provider.mapper.ITeacherMapper.selectById"/>
     <collection property="qualifications" column="id"
       select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByCourseId"/>
+  </resultMap>
+
+  <resultMap id="BasicResult" type="com.qinxiu.patterson.provider.domain.Course">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
   </resultMap>
 
   <select id="selectLinkById" resultMap="BaseResultMap">
@@ -21,7 +28,7 @@
     select *
     from tb_course
   </select>
-  <select id="selectByTeacherId" resultMap="BaseResultMap">
+  <select id="selectByTeacherId" resultMap="BasicResult">
     select *
     from tb_course
     where teacher_id = #{id}

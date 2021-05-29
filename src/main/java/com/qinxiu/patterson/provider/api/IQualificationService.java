@@ -2,6 +2,7 @@ package com.qinxiu.patterson.provider.api;
 
 
 import com.qinxiu.patterson.provider.domain.Qualification;
+import java.util.List;
 
 public interface IQualificationService {
 
@@ -15,4 +16,5 @@ public interface IQualificationService {
 
   Qualification get(Long studentId,Long courseId);
 
+  List<Qualification> getByCourseId(Long courseId);
 }

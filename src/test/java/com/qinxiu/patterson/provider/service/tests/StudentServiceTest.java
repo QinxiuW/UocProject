@@ -162,14 +162,14 @@ public class StudentServiceTest {
   @Test
   void get_success(){
     // Arrange
-    Mockito.when(studentMapper.selectLinkById(anyLong())).thenReturn(mockStudent);
+    Mockito.when(studentMapper.selectById(anyLong())).thenReturn(mockStudent);
 
     // Act
     var result = studentService.get(anyLong());
 
     // Assert
     Assertions.assertEquals(mockStudent, result);
-    Mockito.verify(studentMapper,Mockito.times(1)).selectLinkById(anyLong());
+    Mockito.verify(studentMapper,Mockito.times(1)).selectById(anyLong());
   }
 
   @Test
@@ -181,20 +181,20 @@ public class StudentServiceTest {
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(studentMapper,Mockito.times(0)).selectLinkById(anyLong());
+    Mockito.verify(studentMapper,Mockito.times(0)).selectById(anyLong());
   }
 
   @Test
   void get_failed_by_return_value(){
     // Arrange
-    Mockito.when(studentMapper.selectLinkById(anyLong())).thenReturn(null);
+    Mockito.when(studentMapper.selectById(anyLong())).thenReturn(null);
 
     // Act
     var result = studentService.get(anyLong());
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(studentMapper,Mockito.times(1)).selectLinkById(anyLong());
+    Mockito.verify(studentMapper,Mockito.times(1)).selectById(anyLong());
   }
 
 }

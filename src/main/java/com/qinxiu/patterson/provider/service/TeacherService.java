@@ -48,7 +48,8 @@ public class TeacherService implements ITeacherService {
     if (id == null) {
       return null;
     }
-    return teacherMapper.selectLinkById(id);
+//    return teacherMapper.selectLinkById(id);
+    return teacherMapper.selectById(id);
   }
 
   @Override

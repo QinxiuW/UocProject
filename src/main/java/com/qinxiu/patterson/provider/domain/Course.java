@@ -38,15 +38,15 @@ public class Course implements Serializable {
   @TableField(value = "teacher_id")
   private Long teacherId;
 
-  /**
-   * Teacher's object (one to one).
-   */
-  @TableField(exist = false)
-  private Teacher teacher;
-
-  /**
-   * Qualification of all student in the current course(one to many).
-   */
-  @TableField(exist = false)
-  private List<Qualification> qualifications;
+//  /**
+//   * Teacher's object (one to one).
+//   */
+//  @TableField(exist = false)
+//  private Teacher teacher;
+//
+//  /**
+//   * Qualification of all student in the current course(one to many).
+//   */
+//  @TableField(exist = false)
+//  private List<Qualification> qualifications;
 }

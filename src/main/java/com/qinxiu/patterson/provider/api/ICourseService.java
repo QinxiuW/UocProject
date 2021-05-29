@@ -16,4 +16,6 @@ public interface ICourseService {
   Course getByName(String name);
 
   List<Course> getAll();
+
+  List<Course> getCourseByTeacherId(Long teacherId);
 }

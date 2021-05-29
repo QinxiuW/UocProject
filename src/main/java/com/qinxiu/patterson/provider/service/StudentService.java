@@ -46,7 +46,8 @@ public class StudentService implements IStudentService {
     if (id == null) {
       return null;
     }
-    return studentMapper.selectLinkById(id);
+//    return studentMapper.selectLinkById(id);
+    return studentMapper.selectById(id);
   }
 
   @Override

@@ -7,16 +7,16 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
-    <association property="teacher" column="teacher_id"
-      select="com.qinxiu.patterson.provider.mapper.ITeacherMapper.selectById"/>
-    <collection property="qualifications" column="id"
-      select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByCourseId"/>
+<!--    <association property="teacher" column="teacher_id"-->
+<!--      select="com.qinxiu.patterson.provider.mapper.ITeacherMapper.selectById"/>-->
+<!--    <collection property="qualifications" column="id"-->
+<!--      select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByCourseId"/>-->
   </resultMap>
 
-  <select id="selectLinkById" resultMap="BaseResultMap">
-    select *
-    from tb_course
-    where id = #{id}
-  </select>
+<!--  <select id="selectLinkById" resultMap="BaseResultMap">-->
+<!--    select *-->
+<!--    from tb_course-->
+<!--    where id = #{id}-->
+<!--  </select>-->
 
 </mapper>

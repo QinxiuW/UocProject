@@ -43,17 +43,15 @@ public class TeacherMapperTest {
         Wrappers.<Teacher>lambdaQuery().eq(Teacher::getName, "Juan")
             .eq(Teacher::getSurname, "MR"));
     Assertions.assertNotNull(teacher);
-    Assertions.assertNull(teacher.getCourses());
 
     // get by id
     teacher = teacherMapper.selectById(teacher.getId());
     Assertions.assertNotNull(teacher);
-    Assertions.assertNull(teacher.getCourses());
 
-    // get by id include Score object
-    teacher = teacherMapper.selectLinkById(teacher.getId());
-    Assertions.assertNotNull(teacher);
-    Assertions.assertNotNull(teacher.getCourses());
+//    // get by id include Score object
+//    teacher = teacherMapper.selectLinkById(teacher.getId());
+//    Assertions.assertNotNull(teacher);
+//    Assertions.assertNotNull(teacher.getCourses());
 
     // get all
     var teachers =  teacherMapper.selectList(Wrappers.<Teacher>lambdaQuery().select());

@@ -58,18 +58,16 @@ public class CourseMapperTest {
     Course course = courseMapper.selectOne(
         Wrappers.<Course>lambdaQuery().eq(Course::getName, "Math"));
     Assertions.assertNotNull(course);
-    Assertions.assertNull(course.getTeacher());
 
     //get by id
     course = courseMapper.selectById(course.getId());
     Assertions.assertNotNull(course);
-    Assertions.assertNull(course.getTeacher());
 
-    //get by id include Teacher object & Qualifications object
-    course = courseMapper.selectLinkById(course.getId());
-    Assertions.assertNotNull(course);
-    Assertions.assertNotNull(course.getTeacher());
-    Assertions.assertNotNull(course.getQualifications());
+//    //get by id include Teacher object & Qualifications object
+//    course = courseMapper.selectLinkById(course.getId());
+//    Assertions.assertNotNull(course);
+//    Assertions.assertNotNull(course.getTeacher());
+//    Assertions.assertNotNull(course.getQualifications());
 
     //get all
     var courses = courseMapper.selectList(Wrappers.<Course>lambdaQuery().select());
@@ -90,7 +88,7 @@ public class CourseMapperTest {
     Course course = courseMapper.selectOne(
         Wrappers.<Course>lambdaQuery().eq(Course::getName, "Math"));
     Assertions.assertNotNull(course);
-    Assertions.assertNull(course.getTeacher());
+
 
     //update the course name
     course.setName("Science");
@@ -100,7 +98,6 @@ public class CourseMapperTest {
     course = courseMapper.selectOne(
         Wrappers.<Course>lambdaQuery().eq(Course::getName, "Science"));
     Assertions.assertNotNull(course);
-    Assertions.assertNull(course.getTeacher());
   }
 
   @Test
@@ -111,7 +108,7 @@ public class CourseMapperTest {
     Long courseId = course.getId();
 
     // need delete all its qualifications before, because the ForeignKey relation.
-    var qualifications = qualificationMapper.selectByCourseId(courseId);
+    var qualifications = qualificationMapper.selectByCourse(courseId);
     qualifications.forEach(qualification -> {qualificationMapper.deleteById(qualification.getId());});
 
     // delete by id

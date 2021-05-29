@@ -38,9 +38,9 @@ public class Teacher {
   @TableField(value = "surname")
   private String surname;
 
-  /**
-   * List of courses (one to many).
-   */
-  @TableField(exist = false)
-  private List<Course> courses;
+//  /**
+//   * List of courses (one to many).
+//   */
+//  @TableField(exist = false)
+//  private List<Course> courses;
 }

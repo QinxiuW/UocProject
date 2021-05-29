@@ -47,7 +47,8 @@ public class CourseService implements ICourseService {
     if (id == null) {
       return null;
     }
-    return courseMapper.selectLinkById(id);
+//    return courseMapper.selectLinkById(id);
+    return courseMapper.selectById(id);
   }
 
   @Override
@@ -62,5 +63,10 @@ public class CourseService implements ICourseService {
   @Override
   public List<Course> getAll() {
     return courseMapper.selectList(Wrappers.<Course>lambdaQuery().select());
+  }
+
+  @Override
+  public List<Course> getCourseByTeacherId(Long teacherId) {
+    return courseMapper.selectByTeacherId(teacherId);
   }
 }

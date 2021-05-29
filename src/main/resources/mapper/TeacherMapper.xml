@@ -10,9 +10,9 @@
       select="com.qinxiu.patterson.provider.mapper.ICourseMapper.selectByTeacherId"/>
   </resultMap>
 
-  <select id="selectLinkById" resultMap="BaseResultMap">
-    select *
-    from tb_teacher
-    where id = #{id}
-  </select>
+<!--  <select id="selectLinkById" resultMap="BaseResultMap">-->
+<!--    select *-->
+<!--    from tb_teacher-->
+<!--    where id = #{id}-->
+<!--  </select>-->
 </mapper>

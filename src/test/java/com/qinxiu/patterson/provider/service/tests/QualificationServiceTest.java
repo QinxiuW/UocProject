@@ -163,14 +163,14 @@ public class QualificationServiceTest {
   @Test
   void get_success(){
     // Arrange
-    Mockito.when(qualificationMapper.selectLinkById(anyLong())).thenReturn(mockQualification);
+    Mockito.when(qualificationMapper.selectById(anyLong())).thenReturn(mockQualification);
 
     // Act
     var result = qualificationService.get(anyLong());
 
     // Assert
     Assertions.assertEquals(mockQualification, result);
-    Mockito.verify(qualificationMapper,Mockito.times(1)).selectLinkById(anyLong());
+    Mockito.verify(qualificationMapper,Mockito.times(1)).selectById(anyLong());
   }
 
   @Test
@@ -182,19 +182,19 @@ public class QualificationServiceTest {
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(qualificationMapper,Mockito.times(0)).selectLinkById(anyLong());
+    Mockito.verify(qualificationMapper,Mockito.times(0)).selectById(anyLong());
   }
 
   @Test
   void get_failed_by_return_value(){
     // Arrange
-    Mockito.when(qualificationMapper.selectLinkById(anyLong())).thenReturn(null);
+    Mockito.when(qualificationMapper.selectById(anyLong())).thenReturn(null);
 
     // Act
     var result = qualificationService.get(anyLong());
 
     // Assert
     Assertions.assertNull(result);
-    Mockito.verify(qualificationMapper,Mockito.times(1)).selectLinkById(anyLong());
+    Mockito.verify(qualificationMapper,Mockito.times(1)).selectById(anyLong());
   }
 }

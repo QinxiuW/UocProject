@@ -58,18 +58,18 @@ public class QualificationMapperTest {
     var qualification = qualificationMapper
         .selectOne(Wrappers.<Qualification>lambdaQuery().eq(Qualification::getScore, 9));
     Assertions.assertNotNull(qualification);
-//    Assertions.assertNull(qualification.getCourse());
+    Assertions.assertNull(qualification.getCourse());
 
     // get by id
     qualification = qualificationMapper.selectById(qualification.getId());
     Assertions.assertNotNull(qualification);
-//    Assertions.assertNull(qualification.getCourse());
+    Assertions.assertNull(qualification.getCourse());
 
-//    // get by id include Course object & Student object
-//    qualification = qualificationMapper.selectLinkById(qualification.getId());
-//    Assertions.assertNotNull(qualification);
-//    Assertions.assertNotNull(qualification.getCourse());
-//    Assertions.assertNotNull(qualification.getStudent());
+    // get by id include Course object & Student object
+    qualification = qualificationMapper.selectLinkById(qualification.getId());
+    Assertions.assertNotNull(qualification);
+    Assertions.assertNotNull(qualification.getCourse());
+    Assertions.assertNotNull(qualification.getStudent());
 
     // get all
     var qualifications = qualificationMapper
@@ -79,13 +79,13 @@ public class QualificationMapperTest {
     // get by courseId
     Course course = courseMapper.selectOne(
         Wrappers.<Course>lambdaQuery().eq(Course::getName, "Math"));
-    qualifications = qualificationMapper.selectByCourse(course.getId());
+    qualifications = qualificationMapper.selectByCourseId(course.getId());
     Assertions.assertNotNull(qualifications);
 
     // get by studentId
     Student student = studentMapper.selectOne(
         Wrappers.<Student>lambdaQuery().eq(Student::getSurname, "studentSurname"));
-    qualifications = qualificationMapper.selectByStudent(student.getId());
+    qualifications = qualificationMapper.selectByStudentId(student.getId());
     Assertions.assertNotNull(qualifications);
   }
 

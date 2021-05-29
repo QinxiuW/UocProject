@@ -59,12 +59,12 @@ public class QualificationService implements IQualificationService {
   @Override
   public List<Qualification> getQualificationsByCourse(Long courseId) {
 
-    return qualificationMapper.selectByCourse(courseId);
+    return qualificationMapper.selectByCourseId(courseId);
   }
 
   @Override
   public List<Qualification> getQualificationsByStudent(Long studentId) {
 
-    return qualificationMapper.selectByStudent(studentId);
+    return qualificationMapper.selectByStudentId(studentId);
   }
 }

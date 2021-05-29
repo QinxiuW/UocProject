@@ -64,10 +64,10 @@ public class StudentMapperTest {
     student = studentMapper.selectById(student.getId());
     Assertions.assertNotNull(student);
 
-//    // get by id include Qualifications object
-//    student = studentMapper.selectLinkById(student.getId());
-//    Assertions.assertNotNull(student);
-//    Assertions.assertNotNull(student.getQualifications());
+    // get by id include Qualifications object
+    student = studentMapper.selectLinkById(student.getId());
+    Assertions.assertNotNull(student);
+    Assertions.assertNotNull(student.getQualifications());
 
     // get all
     var students = studentMapper.selectList(Wrappers.<Student>lambdaQuery().select());
@@ -102,7 +102,7 @@ public class StudentMapperTest {
     Long studentId = student.getId();
 
     // need delete all its qualifications before, because the ForeignKey relation.
-    var qualifications = qualificationMapper.selectByStudent(studentId);
+    var qualifications = qualificationMapper.selectByStudentId(studentId);
     qualifications.forEach(qualification -> {
       qualificationMapper.deleteById(qualification.getId());
     });

@@ -37,9 +37,9 @@ public class Student {
   @TableField(value = "surname")
   private String surname;
 
-//  /**
-//   * Qualification of all student in the current course(one to many).
-//   */
-//  @TableField(exist = false)
-//  private List<Qualification> qualifications;
+  /**
+   * Qualification of all student in the current course(one to many).
+   */
+  @TableField(exist = false)
+  private List<Qualification> qualifications;
 }

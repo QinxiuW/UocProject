@@ -36,12 +36,12 @@ public class Qualification {
    */
   @TableField(value = "course_id")
   private Long courseId;
-//
-//  /**
-//   * Course's object (one to one).
-//   */
-//  @TableField(exist = false)
-//  private Course course;
+
+  /**
+   * Course's object (one to one).
+   */
+  @TableField(exist = false)
+  private Course course;
 
   /**
    * Student's id as foreign key.
@@ -49,9 +49,9 @@ public class Qualification {
   @TableField(value = "student_id")
   private Long studentId;
 
-//  /**
-//   * Student's object (one to one)
-//   */
-//  @TableField(exist = false)
-//  private Student student;
+  /**
+   * Student's object (one to one)
+   */
+  @TableField(exist = false)
+  private Student student;
 }

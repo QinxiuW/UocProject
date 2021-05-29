@@ -7,13 +7,13 @@ import org.apache.ibatis.annotations.Select;
 
 public interface IQualificationMapper extends BaseMapper<Qualification> {
 
-//  Qualification selectLinkById(Long id);
+  Qualification selectLinkById(Long id);
 
   @Select("select * from tb_qualification where course_id = #{id}")
-  List<Qualification> selectByCourse(Long id);
+  List<Qualification> selectByCourseId(Long id);
 
   @Select("select * from tb_qualification where student_id = #{id}")
-  List<Qualification> selectByStudent(Long id);
+  List<Qualification> selectByStudentId(Long id);
 
   @Select("select * from tb_qualification where student_id = #{studentID} AND course_id = #{CourseID} ")
   Qualification selectByStudentAndCourse(Long studentID, Long CourseID);

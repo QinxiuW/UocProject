@@ -7,15 +7,15 @@
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="course_id" jdbcType="BIGINT" property="courseId" />
     <result column="student_id" jdbcType="BIGINT" property="studentId" />
-<!--    <association property="course" column="course_id"-->
-<!--      select="com.qinxiu.patterson.provider.mapper.ICourseMapper.selectById"/>-->
-<!--    <association property="student" column="student_id"-->
-<!--      select="com.qinxiu.patterson.provider.mapper.IStudentMapper.selectById"/>-->
+    <association property="course" column="course_id"
+      select="com.qinxiu.patterson.provider.mapper.ICourseMapper.selectById"/>
+    <association property="student" column="student_id"
+      select="com.qinxiu.patterson.provider.mapper.IStudentMapper.selectById"/>
   </resultMap>
 
-<!--  <select id="selectLinkById" resultMap="BaseResultMap">-->
-<!--    select *-->
-<!--    from tb_qualification-->
-<!--    where id = #{id}-->
-<!--  </select>-->
+  <select id="selectLinkById" resultMap="BaseResultMap">
+    select *
+    from tb_qualification
+    where id = #{id}
+  </select>
 </mapper>

@@ -5,5 +5,7 @@ import com.qinxiu.patterson.provider.domain.Teacher;
 
 public interface ITeacherMapper extends BaseMapper<Teacher> {
 
-//  Teacher selectLinkById(Long id);
+  Teacher selectLinkById(Long id);
+
+
 }

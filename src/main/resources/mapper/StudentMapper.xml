@@ -6,13 +6,13 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="surname" jdbcType="VARCHAR" property="surname" />
-<!--    <collection property="qualifications" column="id"-->
-<!--      select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByStudentId"/>-->
+    <collection property="qualifications" column="id"
+      select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByStudentId"/>
   </resultMap>
 
-<!--  <select id="selectLinkById" resultMap="BaseResultMap">-->
-<!--    select *-->
-<!--    from tb_student-->
-<!--    where id = #{id}-->
-<!--  </select>-->
+  <select id="selectLinkById" resultMap="BaseResultMap">
+    select *
+    from tb_student
+    where id = #{id}
+  </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.qinxiu.patterson.business.common.BusinessException;
 import com.qinxiu.patterson.business.common.BusinessStatus;
 import com.qinxiu.patterson.business.common.ResponseResult;
 import com.qinxiu.patterson.provider.api.IQualificationService;
+import com.qinxiu.patterson.provider.api.IStudentService;
 import com.qinxiu.patterson.provider.domain.Qualification;
 import java.util.List;
 import javax.annotation.Resource;
@@ -21,6 +22,9 @@ public class StudentController {
   @Resource
   IQualificationService qualificationService;
 
+  @Resource
+  IStudentService studentService;
+
   @PostMapping(value = "apply/course")
   public ResponseResult<Void> applyCourse(@RequestParam Long studentID,
       @RequestParam Long courseID) {
@@ -33,19 +37,22 @@ public class StudentController {
     }
     throw new BusinessException(BusinessStatus.COURSE_APPLICATION_ERROR);
   }
-//
-//  @GetMapping(value = "qualifications")
-//  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
-//
-//
-//    var qualifications = qualificationService.getQualificationsByStudent(studentID);
-//    return ResponseResult.<List<Qualification>>builder()
-//        .message(BusinessStatus.OK.getMessage())
-//        .code(BusinessStatus.OK.getCode())
-//        .data(qualifications).build();
-//  }
+
+  @GetMapping(value = "qualifications")
+  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
+
+    var student = studentService.get(studentID);
+    if (student == null) {
+      throw new BusinessException(BusinessStatus.STUDENT_NOT_FOUND);
+    }
+    return ResponseResult.<List<Qualification>>builder()
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(student.getQualifications()).build();
+  }
+
   @GetMapping(value = "/ping")
-  public String ping(){
-    return "pong";
+  public String ping() {
+    return "studentController pong";
   }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinxiu.patterson.provider.mapper.IStudentMapper">
+
+  <resultMap id="BaseResultMap" type="com.qinxiu.patterson.provider.domain.Student">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="surname" jdbcType="VARCHAR" property="surname" />
+    <collection property="qualifications" column="id"
+      select="com.qinxiu.patterson.provider.mapper.IQualificationMapper.selectByStudentId"/>
+  </resultMap>
+
+  <select id="selectLinkById" resultMap="BaseResultMap">
+    select *
+    from tb_student
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from tb_student
+  </select>
+</mapper>

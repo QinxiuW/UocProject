@@ -2,6 +2,7 @@ package com.qinxiu.patterson.provider.mapper.tests;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
+import com.qinxiu.patterson.provider.TestApplication;
 import com.qinxiu.patterson.provider.domain.Course;
 import com.qinxiu.patterson.provider.domain.Qualification;
 import com.qinxiu.patterson.provider.domain.Student;
@@ -18,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = TestApplication.class)
 @Transactional
 @Rollback
 public class QualificationMapperTest {

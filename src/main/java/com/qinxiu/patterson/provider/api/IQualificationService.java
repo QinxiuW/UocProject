@@ -14,7 +14,7 @@ public interface IQualificationService {
 
   Qualification get(Long id);
 
-  Qualification get(Long studentId,Long courseId);
+  Qualification get(Long studentId, Long courseId);
 
   List<Qualification> getByCourseId(Long courseId);
 }

@@ -45,7 +45,7 @@
   </select>
 
   <select id="selectByStudentAndCourse" resultMap="BaseResultMap">
-    select * from tb_qualification where student_id = #{studentID} AND course_id = #{CourseID}
+    select * from tb_qualification where student_id = #{studentID} AND course_id = #{courseID}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select * from tb_qualification

@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="col-12">
+  <h2 th:text="${'Teacher: '+ teacher.getName() +' '+ teacher.getSurname()}"></h2>
+  <div th:each = "qualificationKvp : ${qualificationHashMap}">
+    <h3 th:text="${'Asignatura: '+ qualificationKvp.key}"></h3>
+    <table class="table" }>
+      <thead>
+      <tr>
+        <th>Estudiante</th>
+        <th>Nota</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="qualification : ${qualificationKvp.value}">
+        <td th:text="${qualification.getStudent().getName()}"></td>
+        <td th:text="${qualification.getScore()}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" th:onclick="|window.location.href = '/index'|"> Back</button>
+</div>
+</body>
+</html>

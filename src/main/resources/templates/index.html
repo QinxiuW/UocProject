@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Spring Boot Thymeleaf Application - Bootstrap Select Option</title>
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <h2>Consultar calificaciones por estudiante</h2>
+    <form method="post" th:object="${mainForm}" th:action="@{/showByStudent}">
+      <div class="form-group">
+        <label for="student_list">Elija un estudiante:</label>
+        <select class="form-control" th:field="*{studentId}" id="student_list">
+          <option th:each="student : ${studentList}"
+                  th:value="${student.getId()}"
+                  th:text="${student.getName() +' '+ student.getSurname()}">
+          </option>
+        </select>
+        <label for="course_list_1">Elija una asignatura:</label>
+        <select class="form-control" th:field="*{courseId}" id="course_list_1">
+          <option value="-1">Todas</option>
+          <option th:each="course : ${courseList}"
+                  th:value="${course.getId()}"
+                  th:text="${course.getName()}">
+          </option>
+        </select>
+        <button class="btn btn-primary" type="submit">Consultar</button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    <h2>Consultar calificaciones por profesor</h2>
+    <form method="post" th:object="${mainForm}" th:action="@{/showByTeacher}">
+      <div class="form-group">
+        <label for="teacher_list">Elija un profesor: </label>
+        <select class="form-control" th:field="*{teacherId}" id="teacher_list">
+          <option th:each="teacher : ${teacherList}"
+                  th:value="${teacher.getId()}"
+                  th:text="${teacher.getName() +' '+ teacher.getSurname()}">
+          </option>
+        </select>
+        <label for="course_list_2">Elija una asignatura:</label>
+        <select class="form-control" th:field="*{courseId}" id="course_list_2">
+          <option value="-1">Todas</option>
+          <option th:each="course : ${courseList}"
+                  th:value="${course.getId()}"
+                  th:text="${course.getName()}">
+          </option>
+        </select>
+        <button class="btn btn-primary" type="submit">Consultar</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+</body>
+</html>

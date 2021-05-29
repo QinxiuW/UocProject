@@ -30,6 +30,11 @@ public class AdminController {
   @Resource
   ICourseService courseService;
 
+  /**
+   * Student Insertion.
+   * @param student {@link Student}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "insert/user")
   public ResponseResult<Void> insertUser(@RequestBody Student student) {
 
@@ -43,6 +48,11 @@ public class AdminController {
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
   }
 
+  /**
+   * Teacher Insertion.
+   * @param teacher {@link Teacher}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "insert/teacher")
   public ResponseResult<Void> insertTeacher(@RequestBody Teacher teacher) {
 
@@ -56,7 +66,11 @@ public class AdminController {
     throw new BusinessException(BusinessStatus.TEACHER_INSERTION_ERROR);
   }
 
-
+  /**
+   * Course Insertion.
+   * @param course {@link Course}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "insert/course")
   public ResponseResult<Void> insertCourse(@RequestBody Course course) {
 
@@ -70,7 +84,10 @@ public class AdminController {
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
   }
 
-
+  /**
+   * Get all students.
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "students")
   public ResponseResult<List<Student>> getStudents() {
 
@@ -81,6 +98,10 @@ public class AdminController {
         .data(students).build();
   }
 
+  /**
+   * Get all teachers.
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "teachers")
   public ResponseResult<List<Teacher>> getTeachers() {
 
@@ -91,6 +112,10 @@ public class AdminController {
         .data(teachers).build();
   }
 
+  /**
+   * Get all courses.
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "courses")
   public ResponseResult<List<Course>> getCourses() {
 
@@ -101,6 +126,10 @@ public class AdminController {
         .data(courses).build();
   }
 
+  /**
+   * Ping action for health check.
+   * @return {@code String}
+   */
   @GetMapping(value = "/ping")
   public String ping() {
     return "adminController pong";

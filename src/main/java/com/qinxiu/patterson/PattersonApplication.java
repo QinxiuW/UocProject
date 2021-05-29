@@ -8,9 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.qinxiu.patterson.provider.mapper")
 public class PattersonApplication {
 
-
   public static void main(String[] args) {
-   SpringApplication.run(PattersonApplication.class, args);
+    SpringApplication.run(PattersonApplication.class, args);
   }
 
 }

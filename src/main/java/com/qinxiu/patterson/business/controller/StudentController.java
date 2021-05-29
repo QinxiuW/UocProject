@@ -26,6 +26,12 @@ public class StudentController {
   @Resource
   IStudentService studentService;
 
+  /**
+   * Apply a student to a subject/course.
+   * @param studentID {@code Long}
+   * @param courseID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "apply/course")
   public ResponseResult<Void> applyCourse(@RequestParam Long studentID,
       @RequestParam Long courseID) {
@@ -39,6 +45,11 @@ public class StudentController {
     throw new BusinessException(BusinessStatus.COURSE_APPLICATION_ERROR);
   }
 
+  /**
+   * Get the corresponding qualifications by a student.
+   * @param studentID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "qualifications")
   public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
 
@@ -52,7 +63,12 @@ public class StudentController {
         .data(student.getQualifications()).build();
   }
 
-  @GetMapping(value = "get")
+  /**
+   * Get the corresponding student by the Id.
+   * @param studentID {@code Long}
+   * @return {@link ResponseResult}
+   */
+  @GetMapping(value = "")
   public ResponseResult<Student> get(@RequestParam Long studentID) {
 
     var student = studentService.get(studentID);
@@ -65,8 +81,12 @@ public class StudentController {
         .data(student).build();
   }
 
+  /**
+   * Ping action for health check.
+   * @return {@code String}
+   */
   @GetMapping(value = "/ping")
   public String ping() {
-    return "studentContro pong";
+    return "studentController pong";
   }
 }

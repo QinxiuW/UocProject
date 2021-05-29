@@ -1,6 +1,5 @@
 package com.qinxiu.patterson.provider.service;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.qinxiu.patterson.provider.api.IStudentService;
 import com.qinxiu.patterson.provider.domain.Student;
 import com.qinxiu.patterson.provider.mapper.IStudentMapper;

@@ -50,7 +50,7 @@ public class Qualification {
   private Long studentId;
 
   /**
-   * Student's object (one to one)
+   * Student's object (one to one).
    */
   @TableField(exist = false)
   private Student student;

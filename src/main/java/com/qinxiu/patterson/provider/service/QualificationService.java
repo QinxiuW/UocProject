@@ -49,11 +49,11 @@ public class QualificationService implements IQualificationService {
   }
 
   @Override
-  public Qualification get(Long studentId,Long courseId) {
-    if (courseId == null || studentId ==null) {
+  public Qualification get(Long studentId, Long courseId) {
+    if (courseId == null || studentId == null) {
       return null;
     }
-    return qualificationMapper.selectByStudentAndCourse(studentId,courseId);
+    return qualificationMapper.selectByStudentAndCourse(studentId, courseId);
   }
 
   @Override

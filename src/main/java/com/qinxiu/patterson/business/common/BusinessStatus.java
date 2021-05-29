@@ -13,23 +13,23 @@ public enum BusinessStatus {
   //=========================================================================================
   //                1011 - 1020 -> Teacher status code
   //=========================================================================================
-  TEACHER_INSERTION_ERROR(400001, "Teacher insertion error"),
-  TEACHER_NOT_FOUND(400001, "Teacher not found"),
+  TEACHER_INSERTION_ERROR(1011, "Teacher insertion error"),
+  TEACHER_NOT_FOUND(1012, "Teacher not found"),
 
   //=========================================================================================
   //                1021 - 1030 -> Course status code
   //=========================================================================================
-  COURSE_APPLICATION_ERROR(100001, "Course application error"),
-  COURSE_INSERTION_ERROR(500001, "Course insertion error"),
-  COURSE_NOT_FOUND(500002, "Course not found"),
-  COURSE_APPLIED(500002,"This course has been already applied"),
-  COURSE_PERMISSION_DENIED(500002, "Course permission denied"),
+  COURSE_APPLICATION_ERROR(1021, "Course application error"),
+  COURSE_INSERTION_ERROR(1022, "Course insertion error"),
+  COURSE_NOT_FOUND(1023, "Course not found"),
+  COURSE_APPLIED(1024, "This course has been already applied"),
+  COURSE_PERMISSION_DENIED(1025, "Course permission denied"),
 
   //=========================================================================================
   //                1031 - 1040 -> Qualification status code
   //=========================================================================================
-  QUALIFICATION_NOT_FOUND(500002, "Qualification not found"),
-  QUALIFICATION_MARK_FAILED(500002, "Qualification mark failed");
+  QUALIFICATION_NOT_FOUND(1031, "Qualification not found"),
+  QUALIFICATION_MARK_FAILED(1032, "Qualification mark failed");
 
   private final Integer code;
   private final String message;
@@ -61,5 +61,4 @@ public enum BusinessStatus {
     }
     return null;
   }
-
 }

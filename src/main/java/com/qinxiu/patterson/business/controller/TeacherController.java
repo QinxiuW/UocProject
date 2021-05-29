@@ -32,7 +32,12 @@ public class TeacherController {
   @Resource
   IQualificationService qualificationService;
 
-
+  /**
+   * Apply a Teacher to a subject/course.
+   * @param teacherID {@code Long}
+   * @param courseID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "apply/course")
   public ResponseResult<Void> applyCourse(@RequestParam Long teacherID,
       @RequestParam Long courseID) {
@@ -56,6 +61,11 @@ public class TeacherController {
     throw new BusinessException(BusinessStatus.COURSE_APPLICATION_ERROR);
   }
 
+  /**
+   * Get the corresponding teacher by the Id.
+   * @param teacherID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "")
   public ResponseResult<Teacher> get(@RequestParam Long teacherID) {
 
@@ -71,6 +81,11 @@ public class TeacherController {
         .data(teacher).build();
   }
 
+  /**
+   * Get the corresponding qualifications by the given teacherID.
+   * @param teacherID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "qualifications")
   public ResponseResult<Map<String, List<Qualification>>> getQualifications(
       @RequestParam Long teacherID) {
@@ -85,10 +100,10 @@ public class TeacherController {
     Map<String, List<Qualification>> qualificationsMap = new HashMap<>();
 
     for (Course course : teacher.getCourses()) {
-     // find qualifications
-      var qualificaitons = qualificationService.getByCourseId(course.getId());
+      // find qualifications
+      var qualifications = qualificationService.getByCourseId(course.getId());
       if (!qualificationsMap.containsKey(course.getName())) {
-        qualificationsMap.put(course.getName(), qualificaitons);
+        qualificationsMap.put(course.getName(), qualifications);
       }
     }
     return ResponseResult.<Map<String, List<Qualification>>>builder()
@@ -97,6 +112,12 @@ public class TeacherController {
         .data(qualificationsMap).build();
   }
 
+  /**
+   * Get the corresponding qualifications by the specific teacher and course.
+   * @param teacherID {@code Long}
+   * @param courseID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "qualificationsByCourse")
   public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherID,
       @RequestParam Long courseID) {
@@ -110,22 +131,27 @@ public class TeacherController {
     // find the corresponding course
     Course courseRS = null;
     for (var course : teacher.getCourses()) {
-      if (course.getId() == courseID) {
+      if (course.getId().equals(courseID)) {
         courseRS = course;
       }
     }
-    if(courseRS == null){
+    if (courseRS == null) {
       throw new BusinessException(BusinessStatus.COURSE_PERMISSION_DENIED);
     }
 
-    var qualificaitons = qualificationService.getByCourseId(courseID);
+    var qualifications = qualificationService.getByCourseId(courseID);
 
     return ResponseResult.<List<Qualification>>builder()
         .message(BusinessStatus.OK.getMessage())
         .code(BusinessStatus.OK.getCode())
-        .data(qualificaitons).build();
+        .data(qualifications).build();
   }
 
+  /**
+   * Get all applied courses by the given teacher.
+   * @param teacherID {@code Long}
+   * @return {@link ResponseResult}
+   */
   @GetMapping(value = "getCourses")
   public ResponseResult<List<Course>> getCourses(@RequestParam Long teacherID) {
 
@@ -140,7 +166,13 @@ public class TeacherController {
         .data(teacher.getCourses()).build();
   }
 
-
+  /**
+   * Mark the score of a specific student and applied course.
+   * @param courseID {@code Long}
+   * @param studentID {@code Long}
+   * @param score {@code Int}
+   * @return {@link ResponseResult}
+   */
   @PostMapping(value = "markQualification")
   public ResponseResult<Void> markQualification(@RequestParam Long courseID,
       @RequestParam Long studentID, @RequestParam int score) {
@@ -161,6 +193,10 @@ public class TeacherController {
     throw new BusinessException(BusinessStatus.QUALIFICATION_MARK_FAILED);
   }
 
+  /**
+   * Ping action for health check.
+   * @return {@code String}
+   */
   @GetMapping(value = "/ping")
   public String ping() {
     return "teacherController pong";

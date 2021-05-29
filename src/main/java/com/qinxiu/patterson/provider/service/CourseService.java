@@ -55,7 +55,7 @@ public class CourseService implements ICourseService {
 
   @Override
   public List<Course> getCourseByTeacherId(Long teacherId) {
-    if (teacherId ==null){
+    if (teacherId == null) {
       return null;
     }
     return courseMapper.selectByTeacherId(teacherId);

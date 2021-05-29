@@ -10,4 +10,3 @@ spring:
     date-format: dd-MM-yyyy HH:mm:ss
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
-

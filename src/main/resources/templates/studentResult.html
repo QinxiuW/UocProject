@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="col-12">
+  <h2 th:text="${'Estudiante: '+ student.getName() +' '+ student.getSurname()}"></h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Asignatura</th>
+      <th>Nota</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="qualification : ${qualificationList}">
+      <td th:text="${qualification.getCourse().getName()}"></td>
+      <td th:text="${qualification.getScore()}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button type="button" th:onclick="|window.location.href = '/index'|"> Back</button>
+</div>
+</body>
+</html>

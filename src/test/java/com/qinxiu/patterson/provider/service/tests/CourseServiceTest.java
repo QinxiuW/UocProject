@@ -1,13 +1,11 @@
 package com.qinxiu.patterson.provider.service.tests;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+
 import com.qinxiu.patterson.provider.domain.Course;
 import com.qinxiu.patterson.provider.mapper.ICourseMapper;
 import com.qinxiu.patterson.provider.service.CourseService;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-
 import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

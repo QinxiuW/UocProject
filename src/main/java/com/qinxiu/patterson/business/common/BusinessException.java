@@ -1,6 +1,5 @@
 package com.qinxiu.patterson.business.common;
 
-@SuppressWarnings("ALL")
 public class BusinessException extends RuntimeException {
 
   private static final long serialVersionUID = 8271010638103209312L;

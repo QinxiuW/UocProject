@@ -3,7 +3,7 @@
 
 ## Build Docker Command:
 
-docker build -t patterson
+docker build -t patterson .
 
 
 ## Excution command:

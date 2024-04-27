@@ -14,7 +14,7 @@ stages:
   displayName: Pre_Commit
   pool: Azure Pipelines
   jobs:
-  - job: Maven_test
+  - job: Unit_test
     displayName:  Maven_test_Job
     steps:
       - task: Maven@3
@@ -22,3 +22,12 @@ stages:
         inputs:
           mavenPomFile: 'pom.xml'
           goals: test
+
+  - job: Linter_Check
+    displayName:  CheckStyle_Job
+    steps:
+      - task: Maven@3
+        displayName: 'Maven test execution'
+        inputs:
+          mavenPomFile: 'pom.xml'
+          goals: checkstyle:check

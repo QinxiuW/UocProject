@@ -8,7 +8,7 @@ trigger:
 
 stages:
 - stage: Pre_Commit
-  displayName: Pre_Commit
+  displayName: Pre Commit
   pool: Azure Pipelines
   jobs:
   - job: Unit_test
@@ -46,3 +46,13 @@ stages:
         fi
       displayName: 'Run TruffleHog Secret Scanner'
       failOnStderr: false
+      
+- stage: Vulnerability_scan
+  dependsOn: Pre_Commit
+  displayName: Vulnerability scan
+  jobs:
+  - job: Job_Comp_A
+    displayName:  Job Component A
+    steps:
+    - script: echo building Component A
+      displayName: build component A

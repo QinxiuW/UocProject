@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
   @Resource
-  IQualificationService qualificationService;
+  private IQualificationService qualificationService;
 
   @Resource
-  IStudentService studentService;
+  private IStudentService studentService;
 
   /**
    * Apply a student to a subject/course.

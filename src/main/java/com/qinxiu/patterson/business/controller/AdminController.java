@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
   @Resource
-  ITeacherService teacherService;
+  private ITeacherService teacherService;
 
   @Resource
-  IStudentService studentService;
+  private IStudentService studentService;
 
   @Resource
-  ICourseService courseService;
+  private ICourseService courseService;
 
   /**
    * Student Insertion.
@@ -50,7 +50,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-        .message(BusinessStatus.OK.getMessage()).build();
+          .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
@@ -69,7 +69,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-        .message(BusinessStatus.OK.getMessage()).build();
+          .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.TEACHER_INSERTION_ERROR);
@@ -88,7 +88,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-        .message(BusinessStatus.OK.getMessage()).build();
+          .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
@@ -104,9 +104,9 @@ public class AdminController {
 
     var students = studentService.getAll();
     return ResponseResult.<List<Student>>builder()
-      .message(BusinessStatus.OK.getMessage())
-      .code(BusinessStatus.OK.getCode())
-      .data(students).build();
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(students).build();
   }
 
   /**
@@ -119,9 +119,9 @@ public class AdminController {
 
     var teachers = teacherService.getAll();
     return ResponseResult.<List<Teacher>>builder()
-      .message(BusinessStatus.OK.getMessage())
-      .code(BusinessStatus.OK.getCode())
-      .data(teachers).build();
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(teachers).build();
   }
 
   /**
@@ -134,9 +134,9 @@ public class AdminController {
 
     var courses = courseService.getAll();
     return ResponseResult.<List<Course>>builder()
-      .message(BusinessStatus.OK.getMessage())
-      .code(BusinessStatus.OK.getCode())
-      .data(courses).build();
+        .message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode())
+        .data(courses).build();
   }
 
   /**

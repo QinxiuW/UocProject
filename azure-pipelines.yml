@@ -15,7 +15,7 @@ stages:
   pool: Azure Pipelines
   jobs:
   - job: Unit_test
-    displayName:  Maven_test_Job
+    displayName:  Unit_test
     steps:
       - task: Maven@3
         displayName: 'Maven test execution'
@@ -24,7 +24,7 @@ stages:
           goals: test
 
   - job: Linter_Check
-    displayName:  CheckStyle_Job
+    displayName:  Linter_Check
     steps:
       - task: Maven@3
         displayName: 'Maven test execution'

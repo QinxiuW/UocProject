@@ -6,9 +6,6 @@
 trigger:
 - none
 
-pool:
-  name: Qinxiu-Local
-
 stages:
 - stage: Pre_Commit
   displayName: Pre_Commit
@@ -31,3 +28,12 @@ stages:
         inputs:
           mavenPomFile: 'pom.xml'
           goals: checkstyle:check
+
+  - job: Secret_Scan
+    displayName: Secret_Scan
+    pool:
+      name: Qinxiu-Local
+    steps:
+    - script: |
+        pwd
+      displayName: 'Command Line Script'

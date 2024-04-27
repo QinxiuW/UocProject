@@ -7,17 +7,20 @@ trigger:
 - none
 
 pool:
-  vmImage: ubuntu-latest
+  name: Qinxiu-Local
 
 stages:
-- stage: Stage_Starting_Point
-  displayName: Starting point
+- stage: Pre_Commit
+  displayName: Pre_Commit
   jobs:
-  - job: Starting_point_Job
-    displayName:  Starting_point_Job
+  - job: Maven_test
+    displayName:  Maven_test_Job
     steps:
-    - script: echo pre processing
-      displayName: pre processing
+      - task: Maven@3
+        displayName: 'Maven test execution'
+        inputs:
+          mavenPomFile: 'pom.xml'
+          goals: test
 
 - stage: Stage_Comp_A
   dependsOn: Stage_Starting_Point

@@ -36,4 +36,5 @@ stages:
     steps:
     - script: |
         pwd
+        ls
       displayName: 'Command Line Script'

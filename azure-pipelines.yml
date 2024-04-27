@@ -12,6 +12,7 @@ pool:
 stages:
 - stage: Pre_Commit
   displayName: Pre_Commit
+  pool: Azure Pipelines
   jobs:
   - job: Maven_test
     displayName:  Maven_test_Job

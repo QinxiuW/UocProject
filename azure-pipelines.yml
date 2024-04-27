@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  name: Qinxiu-Local
+  name: Azure Pipelines
 
 stages:
 - stage: Pre_Commit

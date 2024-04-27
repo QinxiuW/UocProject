@@ -37,4 +37,11 @@ stages:
     - script: |
         output=$(docker run -t trufflesecurity/trufflehog git  --branch master https://qinxiu.wang:kpmc5e6l4srpcpbnw4jchu6wufmzfrbg7cx5myudussyg3cgf5za@dev.azure.com/Patterson-Agency-Palma/Laboratorio/_git/CollegeScoreManager --only-verified)
         echo "$output" 
+        if echo "$output" | grep -q '"verified_secrets": [^0]\|"unverified_secrets": [^0]'; then
+          echo "Secrets found, failing the build"
+          exit 1
+        else
+          echo "No secrets found, proceeding with the build"
+        fi
       displayName: 'Run TruffleHog Secret Scanner'
+      failOnStderr: false

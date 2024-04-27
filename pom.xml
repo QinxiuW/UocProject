@@ -110,7 +110,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.1</version>
         <configuration>
-          <configLocation>GoogleStyleCustom.xml</configLocation>
+          <configLocation>checkstyle-checks.xml</configLocation>
         </configuration>
         <executions>
           <execution>

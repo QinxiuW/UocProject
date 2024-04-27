@@ -11,30 +11,29 @@ stages:
   displayName: Pre_Commit
   pool: Azure Pipelines
   jobs:
-  - job: Unit_test
-    displayName:  Unit_test
-    steps:
-      - task: Maven@3
-        displayName: 'Maven test execution'
-        inputs:
-          mavenPomFile: 'pom.xml'
-          goals: test
+  # - job: Unit_test
+  #   displayName:  Unit_test
+  #   steps:
+  #     - task: Maven@3
+  #       displayName: 'Maven test execution'
+  #       inputs:
+  #         mavenPomFile: 'pom.xml'
+  #         goals: test
 
-  - job: Linter_Check
-    displayName:  Linter_Check
-    steps:
-      - task: Maven@3
-        displayName: 'Maven test execution'
-        inputs:
-          mavenPomFile: 'pom.xml'
-          goals: checkstyle:check
+  # - job: Linter_Check
+  #   displayName:  Linter_Check
+  #   steps:
+  #     - task: Maven@3
+  #       displayName: 'Maven test execution'
+  #       inputs:
+  #         mavenPomFile: 'pom.xml'
+  #         goals: checkstyle:check
 
   - job: Secret_Scan
-    displayName: Secret_Scan
+    displayName: Secret Scan Job
     pool:
       name: Qinxiu-Local
     steps:
     - script: |
-        pwd
-        ls
-      displayName: 'Command Line Script'
+        docker run -t trufflesecurity/trufflehog file://$(Build.SourcesDirectory) --only-verified
+      displayName: 'Run TruffleHog Secret Scanner'

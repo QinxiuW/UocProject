@@ -17,6 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * ThymeleafController.
+ *
+ * @Description: ThymeleafController
+ * @Date 27/4/24 21:52
+ * @Created by qinxiuwang
+ */
 @Controller
 public class ThymeleafController {
 
@@ -32,8 +39,16 @@ public class ThymeleafController {
   @Resource
   IQualificationService qualificationService;
 
+  /**
+   * ThymeleafController.
+   *
+   * @Description: ThymeleafController
+   * @Date 27/4/24 21:56
+   * @Created by qinxiuwang
+   */
   @Data
   public class Form {
+
     public Long studentId;
     public Long courseId;
     public Long teacherId;
@@ -41,6 +56,7 @@ public class ThymeleafController {
 
   /**
    * Thymeleaf controller corresponds to the index.html page.
+   *
    * @param model {@link Model}
    * @return {@code String}
    */
@@ -61,9 +77,10 @@ public class ThymeleafController {
   }
 
   /**
-   * Thymeleaf controller corresponds to the studentResult.html.
-   * Show the qualifications result of corresponding Student.
-   * @param form {@link Form}
+   * Thymeleaf controller corresponds to the studentResult.html. Show the qualifications result of
+   * corresponding Student.
+   *
+   * @param form  {@link Form}
    * @param model {@link Model}
    * @return {@code String}
    */
@@ -86,9 +103,10 @@ public class ThymeleafController {
   }
 
   /**
-   * Thymeleaf controller corresponds to the teacherResult.html.
-   * Show the qualifications result of corresponding Teacher.
-   * @param form {@link Form}
+   * Thymeleaf controller corresponds to the teacherResult.html. Show the qualifications result of
+   * corresponding Teacher.
+   *
+   * @param form  {@link Form}
    * @param model {@link Model}
    * @return {@link Model}
    */

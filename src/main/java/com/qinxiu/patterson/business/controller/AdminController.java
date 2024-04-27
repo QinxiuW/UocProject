@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * AdminController.
+ *
+ * @Description: AdminController
+ * @Date 27/4/24 21:45
+ * @Created by qinxiuwang
+ */
 @RestController
 @RequestMapping(value = "admin")
 public class AdminController {
@@ -32,6 +39,7 @@ public class AdminController {
 
   /**
    * Student Insertion.
+   *
    * @param student {@link Student}
    * @return {@link ResponseResult}
    */
@@ -42,7 +50,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-          .message(BusinessStatus.OK.getMessage()).build();
+        .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
@@ -50,6 +58,7 @@ public class AdminController {
 
   /**
    * Teacher Insertion.
+   *
    * @param teacher {@link Teacher}
    * @return {@link ResponseResult}
    */
@@ -60,7 +69,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-          .message(BusinessStatus.OK.getMessage()).build();
+        .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.TEACHER_INSERTION_ERROR);
@@ -68,6 +77,7 @@ public class AdminController {
 
   /**
    * Course Insertion.
+   *
    * @param course {@link Course}
    * @return {@link ResponseResult}
    */
@@ -78,7 +88,7 @@ public class AdminController {
 
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
-          .message(BusinessStatus.OK.getMessage()).build();
+        .message(BusinessStatus.OK.getMessage()).build();
     }
 
     throw new BusinessException(BusinessStatus.COURSE_INSERTION_ERROR);
@@ -86,6 +96,7 @@ public class AdminController {
 
   /**
    * Get all students.
+   *
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "students")
@@ -93,13 +104,14 @@ public class AdminController {
 
     var students = studentService.getAll();
     return ResponseResult.<List<Student>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(students).build();
+      .message(BusinessStatus.OK.getMessage())
+      .code(BusinessStatus.OK.getCode())
+      .data(students).build();
   }
 
   /**
    * Get all teachers.
+   *
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "teachers")
@@ -107,13 +119,14 @@ public class AdminController {
 
     var teachers = teacherService.getAll();
     return ResponseResult.<List<Teacher>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(teachers).build();
+      .message(BusinessStatus.OK.getMessage())
+      .code(BusinessStatus.OK.getCode())
+      .data(teachers).build();
   }
 
   /**
    * Get all courses.
+   *
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "courses")
@@ -121,13 +134,14 @@ public class AdminController {
 
     var courses = courseService.getAll();
     return ResponseResult.<List<Course>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(courses).build();
+      .message(BusinessStatus.OK.getMessage())
+      .code(BusinessStatus.OK.getCode())
+      .data(courses).build();
   }
 
   /**
    * Ping action for health check.
+   *
    * @return {@code String}
    */
   @GetMapping(value = "/ping")

@@ -7,6 +7,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * CourseService.
+ *
+ * @Description: CourseService
+ * @Date 27/4/24 21:46
+ * @Created by qinxiuwang
+ */
 @Service
 public class CourseService implements ICourseService {
 

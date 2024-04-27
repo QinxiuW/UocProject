@@ -12,6 +12,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Course.
+ *
+ * @Description: Course
+ * @Date 27/4/24 21:46
+ * @Created by qinxiuwang
+ */
 @Data
 @Builder
 @AllArgsConstructor

@@ -5,6 +5,13 @@ import com.qinxiu.patterson.provider.domain.Student;
 import java.util.List;
 
 
+/**
+ * IStudentMapper.
+ *
+ * @Description: IStudentMapper
+ * @Date 27/4/24 21:54
+ * @Created by qinxiuwang
+ */
 public interface IStudentMapper extends BaseMapper<Student> {
 
   Student selectLinkById(Long id);

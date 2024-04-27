@@ -19,6 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * TeacherController.
+ *
+ * @Description: TeacherController
+ * @Date 27/4/24 21:53
+ * @Created by qinxiuwang
+ */
 @RestController
 @RequestMapping(value = "teacher")
 public class TeacherController {
@@ -34,15 +41,16 @@ public class TeacherController {
 
   /**
    * Apply a Teacher to a subject/course.
-   * @param teacherID {@code Long}
-   * @param courseID {@code Long}
+   *
+   * @param teacherId {@code Long}
+   * @param courseId  {@code Long}
    * @return {@link ResponseResult}
    */
   @PostMapping(value = "apply/course")
-  public ResponseResult<Void> applyCourse(@RequestParam Long teacherID,
-      @RequestParam Long courseID) {
+  public ResponseResult<Void> applyCourse(@RequestParam Long teacherId,
+      @RequestParam Long courseId) {
 
-    var course = courseService.get(courseID);
+    var course = courseService.get(courseId);
     if (course == null) {
       throw new BusinessException(BusinessStatus.COURSE_NOT_FOUND);
     }
@@ -51,7 +59,7 @@ public class TeacherController {
       throw new BusinessException(BusinessStatus.COURSE_APPLIED);
     }
 
-    course.setTeacherId(teacherID);
+    course.setTeacherId(teacherId);
 
     var result = courseService.update(course);
     if (result > 0) {
@@ -63,35 +71,35 @@ public class TeacherController {
 
   /**
    * Get the corresponding teacher by the Id.
-   * @param teacherID {@code Long}
+   *
+   * @param teacherId {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "")
-  public ResponseResult<Teacher> get(@RequestParam Long teacherID) {
+  public ResponseResult<Teacher> get(@RequestParam Long teacherId) {
 
     // find teacher
-    var teacher = teacherService.get(teacherID);
+    var teacher = teacherService.get(teacherId);
     if (teacher == null) {
       throw new BusinessException(BusinessStatus.TEACHER_NOT_FOUND);
     }
 
-    return ResponseResult.<Teacher>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(teacher).build();
+    return ResponseResult.<Teacher>builder().message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode()).data(teacher).build();
   }
 
   /**
    * Get the corresponding qualifications by the given teacherID.
-   * @param teacherID {@code Long}
+   *
+   * @param teacherId {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "qualifications")
   public ResponseResult<Map<String, List<Qualification>>> getQualifications(
-      @RequestParam Long teacherID) {
+      @RequestParam Long teacherId) {
 
     // find teacher
-    var teacher = teacherService.get(teacherID);
+    var teacher = teacherService.get(teacherId);
     if (teacher == null) {
       throw new BusinessException(BusinessStatus.TEACHER_NOT_FOUND);
     }
@@ -107,78 +115,76 @@ public class TeacherController {
       }
     }
     return ResponseResult.<Map<String, List<Qualification>>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
+        .message(BusinessStatus.OK.getMessage()).code(BusinessStatus.OK.getCode())
         .data(qualificationsMap).build();
   }
 
   /**
    * Get the corresponding qualifications by the specific teacher and course.
-   * @param teacherID {@code Long}
-   * @param courseID {@code Long}
+   *
+   * @param teacherId {@code Long}
+   * @param courseId  {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "qualificationsByCourse")
-  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherID,
-      @RequestParam Long courseID) {
+  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long teacherId,
+      @RequestParam Long courseId) {
 
     // find teacher
-    var teacher = teacherService.get(teacherID);
+    var teacher = teacherService.get(teacherId);
     if (teacher == null) {
       throw new BusinessException(BusinessStatus.TEACHER_NOT_FOUND);
     }
 
     // find the corresponding course
-    Course courseRS = null;
+    Course courseRs = null;
     for (var course : teacher.getCourses()) {
-      if (course.getId().equals(courseID)) {
-        courseRS = course;
+      if (course.getId().equals(courseId)) {
+        courseRs = course;
       }
     }
-    if (courseRS == null) {
+    if (courseRs == null) {
       throw new BusinessException(BusinessStatus.COURSE_PERMISSION_DENIED);
     }
 
-    var qualifications = qualificationService.getByCourseId(courseID);
+    var qualifications = qualificationService.getByCourseId(courseId);
 
-    return ResponseResult.<List<Qualification>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(qualifications).build();
+    return ResponseResult.<List<Qualification>>builder().message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode()).data(qualifications).build();
   }
 
   /**
    * Get all applied courses by the given teacher.
-   * @param teacherID {@code Long}
+   *
+   * @param teacherId {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "getCourses")
-  public ResponseResult<List<Course>> getCourses(@RequestParam Long teacherID) {
+  public ResponseResult<List<Course>> getCourses(@RequestParam Long teacherId) {
 
     // find teacher
-    var teacher = teacherService.get(teacherID);
+    var teacher = teacherService.get(teacherId);
     if (teacher == null) {
       throw new BusinessException(BusinessStatus.TEACHER_NOT_FOUND);
     }
-    return ResponseResult.<List<Course>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(teacher.getCourses()).build();
+    return ResponseResult.<List<Course>>builder().message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode()).data(teacher.getCourses()).build();
   }
 
   /**
    * Mark the score of a specific student and applied course.
-   * @param courseID {@code Long}
-   * @param studentID {@code Long}
-   * @param score {@code Int}
+   *
+   * @param courseId  {@code Long}
+   * @param studentId {@code Long}
+   * @param score     {@code Int}
    * @return {@link ResponseResult}
    */
   @PostMapping(value = "markQualification")
-  public ResponseResult<Void> markQualification(@RequestParam Long courseID,
-      @RequestParam Long studentID, @RequestParam int score) {
+  public ResponseResult<Void> markQualification(@RequestParam Long courseId,
+      @RequestParam Long studentId, @RequestParam int score) {
 
     // find the corresponding qualification
-    var qualification = qualificationService.get(studentID, courseID);
+    var qualification = qualificationService.get(studentId, courseId);
     if (qualification == null) {
       throw new BusinessException(BusinessStatus.QUALIFICATION_NOT_FOUND);
     }
@@ -195,6 +201,7 @@ public class TeacherController {
 
   /**
    * Ping action for health check.
+   *
    * @return {@code String}
    */
   @GetMapping(value = "/ping")

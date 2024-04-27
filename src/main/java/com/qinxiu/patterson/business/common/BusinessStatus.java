@@ -1,5 +1,12 @@
 package com.qinxiu.patterson.business.common;
 
+/**
+ * BusinessStatus.
+ *
+ * @Description: BusinessStatus
+ * @Date 27/4/24 21:46
+ * @Created by qinxiuwang
+ */
 public enum BusinessStatus {
   UNKNOWN(-1, "UNKNOWN"),
   OK(2000, "Request successful"),

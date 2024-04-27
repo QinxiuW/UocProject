@@ -16,6 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * StudentController.
+ *
+ * @Description: StudentController
+ * @Date 27/4/24 21:53
+ * @Created by qinxiuwang
+ */
 @RestController
 @RequestMapping(value = "student")
 public class StudentController {
@@ -28,15 +35,16 @@ public class StudentController {
 
   /**
    * Apply a student to a subject/course.
-   * @param studentID {@code Long}
-   * @param courseID {@code Long}
+   *
+   * @param studentId {@code Long}
+   * @param courseId  {@code Long}
    * @return {@link ResponseResult}
    */
   @PostMapping(value = "apply/course")
-  public ResponseResult<Void> applyCourse(@RequestParam Long studentID,
-      @RequestParam Long courseID) {
+  public ResponseResult<Void> applyCourse(@RequestParam Long studentId,
+      @RequestParam Long courseId) {
 
-    var qualification = Qualification.builder().courseId(courseID).studentId(studentID).build();
+    var qualification = Qualification.builder().courseId(courseId).studentId(studentId).build();
     var result = qualificationService.insert(qualification);
     if (result > 0) {
       return ResponseResult.<Void>builder().code(BusinessStatus.OK.getCode())
@@ -47,42 +55,41 @@ public class StudentController {
 
   /**
    * Get the corresponding qualifications by a student.
-   * @param studentID {@code Long}
+   *
+   * @param studentId {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "qualifications")
-  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentID) {
+  public ResponseResult<List<Qualification>> getQualifications(@RequestParam Long studentId) {
 
-    var student = studentService.get(studentID);
+    var student = studentService.get(studentId);
     if (student == null) {
       throw new BusinessException(BusinessStatus.STUDENT_NOT_FOUND);
     }
-    return ResponseResult.<List<Qualification>>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(student.getQualifications()).build();
+    return ResponseResult.<List<Qualification>>builder().message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode()).data(student.getQualifications()).build();
   }
 
   /**
    * Get the corresponding student by the Id.
-   * @param studentID {@code Long}
+   *
+   * @param studentId {@code Long}
    * @return {@link ResponseResult}
    */
   @GetMapping(value = "")
-  public ResponseResult<Student> get(@RequestParam Long studentID) {
+  public ResponseResult<Student> get(@RequestParam Long studentId) {
 
-    var student = studentService.get(studentID);
+    var student = studentService.get(studentId);
     if (student == null) {
       throw new BusinessException(BusinessStatus.STUDENT_NOT_FOUND);
     }
-    return ResponseResult.<Student>builder()
-        .message(BusinessStatus.OK.getMessage())
-        .code(BusinessStatus.OK.getCode())
-        .data(student).build();
+    return ResponseResult.<Student>builder().message(BusinessStatus.OK.getMessage())
+        .code(BusinessStatus.OK.getCode()).data(student).build();
   }
 
   /**
    * Ping action for health check.
+   *
    * @return {@code String}
    */
   @GetMapping(value = "/ping")

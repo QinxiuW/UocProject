@@ -7,6 +7,13 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+/**
+ * QualificationService.
+ *
+ * @Description: QualificationService
+ * @Date 27/4/24 21:48
+ * @Created by qinxiuwang
+ */
 @Service
 public class QualificationService implements IQualificationService {
 

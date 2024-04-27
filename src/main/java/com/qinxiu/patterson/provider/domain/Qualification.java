@@ -11,6 +11,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Qualification.
+ *
+ * @Description: Qualification
+ * @Date 27/4/24 21:53
+ * @Created by qinxiuwang
+ */
 @Data
 @Builder
 @AllArgsConstructor

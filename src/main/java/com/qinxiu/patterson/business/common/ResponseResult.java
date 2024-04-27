@@ -6,6 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * ResponseResult.
+ *
+ * @Description: ResponseResult
+ * @Date 27/4/24 21:48
+ * @Created by qinxiuwang
+ */
 @Data
 @ToString
 @EqualsAndHashCode

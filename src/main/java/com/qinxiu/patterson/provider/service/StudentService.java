@@ -7,6 +7,13 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+/**
+ * StudentService.
+ *
+ * @Description: StudentService
+ * @Date 27/4/24 21:48
+ * @Created by qinxiuwang
+ */
 @Service
 public class StudentService implements IStudentService {
 

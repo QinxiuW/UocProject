@@ -6,6 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * BusinessExceptionHandler.
+ *
+ * @Description: BusinessExceptionHandler
+ * @Date 27/4/24 21:46
+ * @Created by qinxiuwang
+ */
 @ControllerAdvice
 public class BusinessExceptionHandler {
 

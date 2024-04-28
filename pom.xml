@@ -16,8 +16,6 @@
   <name>patterson</name>
 
 
-
-
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>
@@ -122,6 +120,25 @@
             <configuration>
               <failOnViolation>true</failOnViolation>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.8.3.1</version>
+        <configuration>
+          <failOnError>true</failOnError>
+          <effort>Max</effort>
+          <threshold>Max</threshold>
+          <xmlOutput>true</xmlOutput>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>

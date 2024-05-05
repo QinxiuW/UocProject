@@ -142,6 +142,24 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>9.0.10</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <nvdApiKey>ae84a609-659d-4bf6-8b11-6f6a5ec16f1b</nvdApiKey>
+          <!-- Fallar el build para vulnerabilidades con un puntaje CVSS mayor o igual a 7 (High) -->
+          <failBuildOnCVSS>20</failBuildOnCVSS>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

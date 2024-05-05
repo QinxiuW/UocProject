@@ -24,7 +24,7 @@ stages:
     displayName:  Linter_Check
     steps:
       - task: Maven@3
-        displayName: 'Maven test execution'
+        displayName: 'Maven Linter check execution'
         inputs:
           mavenPomFile: 'pom.xml'
           goals: checkstyle:check
@@ -68,4 +68,17 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: org.owasp:dependency-check-maven:check
- 
+
+- stage: SCA
+  dependsOn: Vulnerability_scan
+  displayName: SCA
+  pool: Azure Pipelines
+  jobs:
+  - job: SCA_job
+    displayName:  cyclonedx execution
+    steps:
+    - task: Maven@3
+      displayName: 'Maven cyclonedx check execution'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: org.cyclonedx:cyclonedx-maven-plugin:makeBom 

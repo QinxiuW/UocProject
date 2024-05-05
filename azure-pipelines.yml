@@ -50,9 +50,22 @@ stages:
 - stage: Vulnerability_scan
   dependsOn: Pre_Commit
   displayName: Vulnerability scan
+  pool: Azure Pipelines
   jobs:
-  - job: Job_Comp_A
-    displayName:  Job Component A
+  - job: SAST
+    displayName:  SAST
     steps:
-    - script: echo building Component A
-      displayName: build component A
+    - task: Maven@3
+      displayName: 'Maven spotbugs check execution'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: spotbugs:check
+  - job: Dependency_checker
+    displayName:  Dependency checker
+    steps:
+    - task: Maven@3
+      displayName: 'Maven spotbugs check execution'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: org.owasp:dependency-check-maven:check
+ 

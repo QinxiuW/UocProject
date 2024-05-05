@@ -82,3 +82,16 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: org.cyclonedx:cyclonedx-maven-plugin:makeBom 
+
+- stage: Container_Image_Build
+  dependsOn: SCA
+  displayName: Container Image Build
+  pool: Azure Pipelines
+  jobs:
+  - job: Build
+    displayName:  'Image build'
+    steps:
+    - task: Docker@2
+      displayName: build
+      inputs:
+        command: build

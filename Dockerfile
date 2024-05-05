@@ -4,7 +4,7 @@ ARG MAVEN_PROFILE=stage
 FROM maven:3.6.0-jdk-11-slim AS build
 WORKDIR /app
 COPY . .
-RUN mvn -f pom.xml clean package -P$MAVEN_PROFILE -DskipTests
+RUN mvn clean package -P$MAVEN_PROFILE -DskipTests
 
 # Package stage
 FROM openjdk:11-jre-slim

@@ -148,3 +148,10 @@ stages:
           exit 1
         fi
       displayName: 'Fail on FATAL Issues'
+
+- stage: Image_Push
+  dependsOn: Image_Hardening
+  displayName: Image Push
+  jobs:
+  - job: Push
+    displayName:  'Image Push'

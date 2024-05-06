@@ -104,7 +104,7 @@ stages:
     displayName:  'Image Scan'
     steps:
     - script: 'grype patterson:$(Build.BuildId) -o json > grype-results-$(Build.BuildId).json'
-      displayName: 'Command Line Script'
+      displayName: 'Run Grype Scan'
 
     - script: |
         cat grype-results-$(Build.BuildId).json

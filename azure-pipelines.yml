@@ -107,6 +107,14 @@ stages:
       displayName: 'Command Line Script'
 
     - script: |
-        critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results-$(Build.BuildId).json)
+        critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results.json)
+        high_count=$(jq '[.matches[] | select(.vulnerability.severity == "High")] | length' grype-results.json)
         echo "Number of critical vulnerabilities: $critical_count"
+        echo "Number of high vulnerabilities: $high_count"
+        
+        if [ "$critical_count" -gt 10 ]; then
+        echo "Error: Number of critical vulnerabilities ($critical_count) exceeds the threshold."
+        exit 1
+        fi
+
       displayName: 'Count Critical Vulnerabilities'

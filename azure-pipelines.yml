@@ -103,5 +103,10 @@ stages:
   - job: Scan
     displayName:  'Image Scan'
     steps:
-    - script: 'grype patterson:$(Build.BuildId)'
+    - script: 'grype patterson:$(Build.BuildId) -o json > grype-results-$(Build.BuildId).json'
       displayName: 'Command Line Script'
+
+    - script: |
+        critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results-$(Build.BuildId).json)
+        echo "Number of critical vulnerabilities: $critical_count"
+      displayName: 'Count Critical Vulnerabilities'

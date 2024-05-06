@@ -107,6 +107,10 @@ stages:
       displayName: 'Command Line Script'
 
     - script: |
+        cat grype-results-$(Build.BuildId).json
+      displayName: 'Print Entire Grype Results JSON'
+
+    - script: |
         critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results-$(Build.BuildId).json)
         high_count=$(jq '[.matches[] | select(.vulnerability.severity == "High")] | length' grype-results-$(Build.BuildId).json)
         echo "Number of critical vulnerabilities: $critical_count"
@@ -137,3 +141,10 @@ stages:
     - script: |
         cat dockle-results-$(Build.BuildId).json
       displayName: 'Print Entire Dockle Results JSON'
+    - script: |
+        fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
+        if [ "$fatal_count" -gt 0 ]; then
+          echo "Error: There are $fatal_count FATAL issues."
+          exit 1
+        fi
+      displayName: 'Fail on FATAL Issues'

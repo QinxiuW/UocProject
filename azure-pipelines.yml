@@ -144,7 +144,7 @@ stages:
     - script: |
         fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
         if [ "$fatal_count" -gt 0 ]; then
-          echo "Error: There are $fatal_count FATAL issues."
-          exit 1
+        echo "Error: There are $fatal_count FATAL issues."
+        exit 1
         fi
       displayName: 'Fail on FATAL Issues'

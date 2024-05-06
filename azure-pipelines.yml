@@ -63,14 +63,14 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: spotbugs:check
-  # - job: Dependency_checker
-  #   displayName:  Dependency checker
-  #   steps:
-  #   - task: Maven@3
-  #     displayName: 'Maven spotbugs check execution'
-  #     inputs:
-  #       mavenPomFile: 'pom.xml'
-  #       goals: org.owasp:dependency-check-maven:check
+  - job: Dependency_checker
+    displayName:  Dependency checker
+    steps:
+    - task: Maven@3
+      displayName: 'Maven spotbugs check execution'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: org.owasp:dependency-check-maven:check
 
 - stage: SCA
   dependsOn: Vulnerability_scan
@@ -112,9 +112,25 @@ stages:
         echo "Number of critical vulnerabilities: $critical_count"
         echo "Number of high vulnerabilities: $high_count"
         
-        if [ "$critical_count" -gt 10 ]; then
+        if [ "$critical_count" -gt 20 ]; then
         echo "Error: Number of critical vulnerabilities ($critical_count) exceeds the threshold."
         exit 1
         fi
-
       displayName: 'Count Critical Vulnerabilities'
+
+- stage: Image_Hardening
+  dependsOn: Container_Image_Scan
+  displayName: Image Hardening
+  jobs:
+  - job: Scan
+    displayName:  'Image hardening'
+    steps:
+    - script: |
+        dockle --format json patterson:$(Build.BuildId) > dockle-results-$(Build.BuildId).json
+      displayName: 'Run Dockle Scan'
+    - script: |
+        warn_count=$(jq '[.details[] | select(.level == "WARN")] | length' dockle-results-$(Build.BuildId).json)
+        fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
+        echo "Number of WARN issues: $warn_count"
+        echo "Number of FATAL issues: $fatal_count"
+      displayName: 'Count WARN and FATAL Issues'

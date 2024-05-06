@@ -107,8 +107,8 @@ stages:
       displayName: 'Command Line Script'
 
     - script: |
-        critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results.json)
-        high_count=$(jq '[.matches[] | select(.vulnerability.severity == "High")] | length' grype-results.json)
+        critical_count=$(jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length' grype-results-$(Build.BuildId).json)
+        high_count=$(jq '[.matches[] | select(.vulnerability.severity == "High")] | length' grype-results-$(Build.BuildId).json)
         echo "Number of critical vulnerabilities: $critical_count"
         echo "Number of high vulnerabilities: $high_count"
         

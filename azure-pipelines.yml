@@ -135,8 +135,5 @@ stages:
         echo "Number of FATAL issues: $fatal_count"
       displayName: 'Count WARN and FATAL Issues'
     - script: |
-        echo "WARN Issues:"
-        jq '.details[] | select(.level == "WARN")' dockle-results-$(Build.BuildId).json
-        echo "FATAL Issues:"
-        jq '.details[] | select(.level == "FATAL")' dockle-results-$(Build.BuildId).json
-      displayName: 'Display WARN and FATAL Issues'
+        cat dockle-results-$(Build.BuildId).json
+      displayName: 'Print Entire Dockle Results JSON'

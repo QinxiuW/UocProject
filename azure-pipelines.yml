@@ -6,6 +6,9 @@
 trigger:
 - none
 
+pool:
+  name: Qinxiu-Local
+
 stages:
 - stage: Pre_Commit
   displayName: Pre Commit
@@ -83,6 +86,18 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: org.cyclonedx:cyclonedx-maven-plugin:makeBom 
 
+# - stage: Container_Image_Build
+#   dependsOn: SCA
+#   displayName: Container Image Build
+#   pool: Azure Pipelines
+#   jobs:
+#   - job: Build
+#     displayName:  'Image build'
+#     steps:
+#     - task: Docker@2
+#       displayName: build
+#       inputs:
+#         command: build
 - stage: Container_Image_Build
   dependsOn: SCA
   displayName: Container Image Build
@@ -91,7 +106,5 @@ stages:
   - job: Build
     displayName:  'Image build'
     steps:
-    - task: Docker@2
-      displayName: build
-      inputs:
-        command: build
+    - script: 'docker build -t patterson:$(Build.BuildId) . '
+      displayName: 'Command Line Script'

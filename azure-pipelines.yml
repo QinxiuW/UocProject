@@ -63,14 +63,14 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: spotbugs:check
-  - job: Dependency_checker
-    displayName:  Dependency checker
-    steps:
-    - task: Maven@3
-      displayName: 'Maven spotbugs check execution'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: org.owasp:dependency-check-maven:check
+  # - job: Dependency_checker
+  #   displayName:  Dependency checker
+  #   steps:
+  #   - task: Maven@3
+  #     displayName: 'Maven spotbugs check execution'
+  #     inputs:
+  #       mavenPomFile: 'pom.xml'
+  #       goals: org.owasp:dependency-check-maven:check
 
 - stage: SCA
   dependsOn: Vulnerability_scan
@@ -86,25 +86,22 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: org.cyclonedx:cyclonedx-maven-plugin:makeBom 
 
-# - stage: Container_Image_Build
-#   dependsOn: SCA
-#   displayName: Container Image Build
-#   pool: Azure Pipelines
-#   jobs:
-#   - job: Build
-#     displayName:  'Image build'
-#     steps:
-#     - task: Docker@2
-#       displayName: build
-#       inputs:
-#         command: build
 - stage: Container_Image_Build
   dependsOn: SCA
   displayName: Container Image Build
-  pool: Azure Pipelines
   jobs:
   - job: Build
     displayName:  'Image build'
     steps:
     - script: 'docker build -t patterson:$(Build.BuildId) . '
+      displayName: 'Command Line Script'
+
+- stage: Container_Image_Scan
+  dependsOn: Container_Image_Build
+  displayName: Container Image Scan
+  jobs:
+  - job: Scan
+    displayName:  'Image Scan'
+    steps:
+    - script: 'grype patterson:$(Build.BuildId)'
       displayName: 'Command Line Script'

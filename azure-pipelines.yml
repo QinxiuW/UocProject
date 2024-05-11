@@ -159,6 +159,6 @@ stages:
       displayName: push
       inputs:
         containerRegistry: 'docker-registry-bcn'
-        repository: 'collegeScoreManager'
+        repository: 'patterson'
         command: push
         tags: '$(Build.BuildId)'

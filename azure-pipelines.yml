@@ -160,5 +160,4 @@ stages:
       inputs:
         containerRegistry: 'docker-registry-bcn'
         repository: 'patterson'
-        command: push
-        tags: '7165'
+        tags: '$(Build.BuildId)'

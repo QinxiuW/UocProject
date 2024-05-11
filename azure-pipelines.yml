@@ -154,3 +154,11 @@ stages:
   jobs:
   - job: Push
     displayName:  'Image Push'
+    steps:
+    - task: Docker@2
+      displayName: push
+      inputs:
+        containerRegistry: 'docker-registry-bcn'
+        repository: 'collegeScoreManager'
+        command: push
+        tags: '$(Build.BuildId)'

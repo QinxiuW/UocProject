@@ -151,6 +151,7 @@ stages:
 - stage: Image_Push
   dependsOn: Image_Hardening
   displayName: Image Push
+  pool: Azure Pipelines
   jobs:
   - job: Push
     displayName:  'Image Push'

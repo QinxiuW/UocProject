@@ -92,7 +92,7 @@ stages:
   - job: Build
     displayName:  'Image build'
     steps:
-    - script: 'docker build -t patterson:$(Build.BuildId) . '
+    - script: 'docker build -t lab-app:$(Build.BuildId) . '
       displayName: 'Command Line Script'
 
 - stage: Container_Image_Scan
@@ -102,7 +102,7 @@ stages:
   - job: Scan
     displayName:  'Image Scan'
     steps:
-    - script: 'grype patterson:$(Build.BuildId) -o json > grype-results-$(Build.BuildId).json'
+    - script: 'grype lab-app:$(Build.BuildId) -o json > grype-results-$(Build.BuildId).json'
       displayName: 'Run Grype Scan'
 
     - script: |
@@ -129,7 +129,7 @@ stages:
     displayName:  'Image hardening'
     steps:
     - script: |
-        dockle --format json patterson:$(Build.BuildId) > dockle-results-$(Build.BuildId).json
+        dockle --format json lab-app:$(Build.BuildId) > dockle-results-$(Build.BuildId).json
       displayName: 'Run Dockle Scan'
     - script: |
         warn_count=$(jq '[.details[] | select(.level == "WARN")] | length' dockle-results-$(Build.BuildId).json)
@@ -159,5 +159,5 @@ stages:
       displayName: push
       inputs:
         containerRegistry: 'docker-registry-bcn'
-        repository: 'patterson'
+        repository: 'lab-app'
         tags: '$(Build.BuildId)'

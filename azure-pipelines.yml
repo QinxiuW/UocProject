@@ -179,19 +179,19 @@ stages:
   - job: OWASP_ZAP_Scan
     displayName: 'OWASP ZAP Scan'
     steps:
-    - script: |
-        mkdir -p $(Build.SourcesDirectory)/zap_reports
-      displayName: 'Ensure ZAP reports directory exists'
+    # - script: |
+    #     mkdir -p $(Build.SourcesDirectory)/zap_reports
+    #   displayName: 'Ensure ZAP reports directory exists'
     - script: |
         echo "Pulling the latest ZAP stable image..."
         docker pull zaproxy/zap-stable:latest
 
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
-        docker run --rm \
+        docker run --rm -u zap \
           -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html -J /zap/wrk/zap_output.json
 
-        echo "Scan completed. Check the zap_reports directory for the HTML report."
+        echo "Scan completed. Check the zap_reports directory for the JSON report."
       displayName: 'Run OWASP ZAP DAST Scan'
     - script: |
         echo "Analyzing ZAP Scan HTML report for High risk vulnerabilities..."
@@ -205,30 +205,6 @@ stages:
           echo "No High vulnerabilities detected. Proceeding..."
         fi
       displayName: 'Analyze ZAP Scan Results'
-
-
-    # - script: |
-    #     echo "Printing ZAP Scan JSON output for review..."
-    #     cat $(Build.SourcesDirectory)/zap_reports/zap_output.json
-    #   displayName: 'Print ZAP Scan Results'
-
-    # - script: |
-    #     echo "Analyzing ZAP Scan results..."
-        
-    #     fail_new=$(jq '.site[0].alerts[] | select(.riskcode == "3") | length' $(Build.SourcesDirectory)/zap_reports/zap_output.json)
-    #     fail_inprog=$(jq '.site[0].alerts[] | select(.riskcode == "2") | length' $(Build.SourcesDirectory)/zap_reports/zap_output.json)
-        
-    #     echo "Number of new FAIL alerts: $fail_new"
-    #     echo "Number of in-progress FAIL alerts: $fail_inprog"
-        
-    #     if [ "$fail_new" -gt 0 ] || [ "$fail_inprog" -gt 0 ]; then
-    #       echo "Error: There are new or in-progress FAIL alerts detected."
-    #       exit 1
-    #     else
-    #       echo "No FAIL alerts detected. Proceeding..."
-    #     fi
-    #   displayName: 'Analyze ZAP Scan Results'
-
 
 - stage: Prod_Deploy
   dependsOn: Image_Push

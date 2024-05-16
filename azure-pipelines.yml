@@ -180,6 +180,9 @@ stages:
     displayName: 'OWASP ZAP Scan'
     steps:
     - script: |
+        mkdir -p $(Build.SourcesDirectory)/zap_reports
+      displayName: 'Ensure ZAP reports directory exists'
+    - script: |
         echo "Pulling the latest ZAP stable image..."
         docker pull zaproxy/zap-stable:latest
 

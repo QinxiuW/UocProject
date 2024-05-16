@@ -173,18 +173,46 @@ stages:
     - script: 'echo deploy'
       displayName: 'Command Line Script'
       
+# - stage: DAST
+#   dependsOn: Stage_Deploy
+#   displayName: DAST (Security Testing)
+#   jobs:
+#   - job: Testing
+#     displayName: 'Security Testing'
+#     steps:
+#     - script: |
+#         echo "Starting ZAP DAST..."
+#         docker pull owasp/zap2docker-stable
+#         docker run -t owasp/zap2docker-stable zap-baseline.py -t http://tuaplicacion.com
+#       displayName: 'Run ZAP'
 - stage: DAST
-  dependsOn: Stage_Deploy
-  displayName: DAST (Security Testing)
+  displayName: 'Run DAST Scan'
   jobs:
-  - job: Testing
-    displayName: 'Security Testing'
+  - job: DastardlyScan
+    displayName: 'Run DAST Scan with Dastardly'
     steps:
-    - script: |
-        echo "Starting ZAP DAST..."
-        docker pull owasp/zap2docker-stable
-        docker run -t owasp/zap2docker-stable zap-baseline.py -t http://tuaplicacion.com
-      displayName: 'Run ZAP'
+    - checkout: self  # Si necesitas acceder al código del repositorio
+
+    - task: CmdLine@2
+      displayName: 'Run DAST scan with Dastardly'
+      inputs:
+        script: |
+          echo "Running DAST scan using Dastardly Docker container..."
+          docker run --user $(id -u) --rm -v $(Build.SourcesDirectory):/dastardly -e \
+          DASTARDLY_TARGET_URL=$(url_to_scan) -e \
+          DASTARDLY_OUTPUT_FILE=/dastardly/dastardly-report.xml \
+          public.ecr.aws/portswigger/dastardly:latest
+          true
+        failOnStderr: false
+        workingDirectory: '$(Build.SourcesDirectory)'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Report'
+      condition: always()  # Fuerza que este paso siempre se ejecute
+      inputs:
+        testResultsFormat: 'JUnit'  # Asegúrate de que el formato de tus resultados es el correcto
+        testResultsFiles: '**/dastardly-report.xml'
+        failTaskOnFailedTests: true  # Falla la tarea si hay pruebas fallidas
 
 - stage: Prod_Deploy
   dependsOn: Image_Push

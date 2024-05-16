@@ -201,10 +201,10 @@ stages:
     - script: |
         echo "Analyzing ZAP Scan HTML report for vulnerabilities..."
         echo $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html
-        high_risk_count=$(grep -o 'class="risk-3">High</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
-        medium_risk_count=$(grep -o 'class="risk-2">Medium</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
-        low_risk_count=$(grep -o 'class="risk-1">Low</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
-        
+        high_risk_count=$(grep -oP 'class="risk-3">.*?</div>.*?<div>\K\d+' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | grep -cv '^0$')
+        medium_risk_count=$(grep -oP 'class="risk-2">.*?</div>.*?<div>\K\d+' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | grep -cv '^0$')
+        low_risk_count=$(grep -oP 'class="risk-1">.*?</div>.*?<div>\K\d+' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | grep -cv '^0$')
+    
         echo "Number of High vulnerabilities: $high_risk_count"
         echo "Number of Medium vulnerabilities: $medium_risk_count"
         echo "Number of Low vulnerabilities: $low_risk_count"

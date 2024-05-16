@@ -199,36 +199,29 @@ stages:
       displayName: 'Run OWASP ZAP DAST Scan and Capture Output'
 
     - script: |
-        echo "Checking for High vulnerabilities in the HTML report..."
+        echo "Analyzing ZAP Scan HTML report for vulnerabilities..."
         high_risk_count=$(grep -o 'class="risk-3">High</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        medium_risk_count=$(grep -o 'class="risk-2">Medium</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        low_risk_count=$(grep -o 'class="risk-1">Low</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        
         echo "Number of High vulnerabilities: $high_risk_count"
+        echo "Number of Medium vulnerabilities: $medium_risk_count"
+        echo "Number of Low vulnerabilities: $low_risk_count"
+        
         if [ "$high_risk_count" -gt 0 ]; then
           echo "Error: High vulnerabilities detected. Number of High vulnerabilities: $high_risk_count"
           exit 1
         else
           echo "No High vulnerabilities detected. Proceeding..."
         fi
-      displayName: 'Analyze ZAP Report for High Vulnerabilities'
+      displayName: 'Analyze ZAP Report for Vulnerabilities'
 
-
-    # - script: |
-    #     echo "Analyzing captured output for High risk vulnerabilities..."
-    #     if echo "$output" | grep -q "High"; then
-    #       echo "Error: High vulnerabilities detected in the output."
-    #       exit 1
-    #     else
-    #       echo "No High vulnerabilities detected in the output. Proceeding..."
-    #     fi
-    #   displayName: 'Analyze Captured Output'
-
-
-
-- stage: Prod_Deploy
+- stage: Prod_Env_Deploy
   dependsOn: DAST
-  displayName: Stage Deployment
+  displayName: Prod Deployment
   jobs:
   - job: Deploy
-    displayName:  'Stage Deploy'
+    displayName:  'Prod Deploy'
     steps:
     - script: 'echo deploy'
       displayName: 'Command Line Script'

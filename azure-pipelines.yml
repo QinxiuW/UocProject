@@ -181,6 +181,11 @@ stages:
     displayName: 'OWASP ZAP Scan'
     steps:
     - script: |
+        echo "Creating directory for ZAP reports..."
+        mkdir -p $(System.DefaultWorkingDirectory)/zap_reports
+      displayName: 'Ensure ZAP reports directory exists'
+
+    - script: |
         echo "Pulling the latest ZAP stable image..."
         docker pull zaproxy/zap-stable:latest
       displayName: 'Pull ZAP Docker Image'
@@ -194,14 +199,27 @@ stages:
       displayName: 'Run OWASP ZAP DAST Scan and Capture Output'
 
     - script: |
-        echo "Analyzing captured output for High risk vulnerabilities..."
-        if echo "$output" | grep -q "High"; then
-          echo "Error: High vulnerabilities detected in the output."
+        echo "Checking for High vulnerabilities in the HTML report..."
+        high_risk_count=$(grep -o 'class="risk-3">High</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        echo "Number of High vulnerabilities: $high_risk_count"
+        if [ "$high_risk_count" -gt 0 ]; then
+          echo "Error: High vulnerabilities detected. Number of High vulnerabilities: $high_risk_count"
           exit 1
         else
-          echo "No High vulnerabilities detected in the output. Proceeding..."
+          echo "No High vulnerabilities detected. Proceeding..."
         fi
-      displayName: 'Analyze Captured Output'
+      displayName: 'Analyze ZAP Report for High Vulnerabilities'
+
+
+    # - script: |
+    #     echo "Analyzing captured output for High risk vulnerabilities..."
+    #     if echo "$output" | grep -q "High"; then
+    #       echo "Error: High vulnerabilities detected in the output."
+    #       exit 1
+    #     else
+    #       echo "No High vulnerabilities detected in the output. Proceeding..."
+    #     fi
+    #   displayName: 'Analyze Captured Output'
 
 
 

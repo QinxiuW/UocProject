@@ -162,3 +162,36 @@ stages:
         containerRegistry: 'docker-registry-bcn'
         repository: 'lab-app'
         tags: '$(Build.BuildId)'
+
+- stage: Stage_Deploy
+  dependsOn: Image_Push
+  displayName: Stage Deployment
+  jobs:
+  - job: Deploy
+    displayName:  'Stage Deploy'
+    steps:
+    - script: 'echo deploy'
+      displayName: 'Command Line Script'
+      
+- stage: DAST
+  dependsOn: Stage_Deploy
+  displayName: DAST (Security Testing)
+  jobs:
+  - job: Testing
+    displayName: 'Security Testing'
+    steps:
+    - script: |
+        echo "Starting ZAP DAST..."
+        docker pull owasp/zap2docker-stable
+        docker run -t owasp/zap2docker-stable zap-baseline.py -t http://tuaplicacion.com
+      displayName: 'Run ZAP'
+
+- stage: Prod_Deploy
+  dependsOn: Image_Push
+  displayName: Stage Deployment
+  jobs:
+  - job: Deploy
+    displayName:  'Stage Deploy'
+    steps:
+    - script: 'echo deploy'
+      displayName: 'Command Line Script'

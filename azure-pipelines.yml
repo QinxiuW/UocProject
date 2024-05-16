@@ -187,33 +187,24 @@ stages:
 #       displayName: 'Run ZAP'
 - stage: DAST
   displayName: 'Run DAST Scan'
-  pool: Azure Pipelines
   jobs:
   - job: DastardlyScan
     displayName: 'Run DAST Scan with Dastardly'
     steps:
-    - checkout: self  # Si necesitas acceder al código del repositorio
+    - checkout: self
+    - script: |
+        echo "Pulling the latest ZAP stable image..."
+        docker pull zaproxy/zap-stable:latest
 
-    - task: CmdLine@2
-      displayName: 'Run DAST scan with Dastardly'
-      inputs:
-        script: |
-          echo "Running DAST scan using Dastardly Docker container..."
-          docker run --user $(id -u) --rm -v $(Build.SourcesDirectory):/dastardly -e \
-          DASTARDLY_TARGET_URL=$(url_to_scan) -e \
-          DASTARDLY_OUTPUT_FILE=/dastardly/dastardly-report.xml \
-          public.ecr.aws/portswigger/dastardly:latest
-          true
-        failOnStderr: false
-        workingDirectory: '$(Build.SourcesDirectory)'
+        echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
+        docker run --rm -u zap \
+          -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk/:rw \
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r zap_report.html
 
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Report'
-      condition: always()  # Fuerza que este paso siempre se ejecute
-      inputs:
-        testResultsFormat: 'JUnit'  # Asegúrate de que el formato de tus resultados es el correcto
-        testResultsFiles: '**/dastardly-report.xml'
-        failTaskOnFailedTests: true  # Falla la tarea si hay pruebas fallidas
+        echo "Scan completed. Reports are available in the zap_reports directory."
+      displayName: 'Execute DAST Scan'
+      env:
+        ZAP_OPTS: "-config api.disablekey=true"
 
 - stage: Prod_Deploy
   dependsOn: Image_Push

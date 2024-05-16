@@ -173,25 +173,12 @@ stages:
     - script: 'echo deploy'
       displayName: 'Command Line Script'
       
-# - stage: DAST
-#   dependsOn: Stage_Deploy
-#   displayName: DAST (Security Testing)
-#   jobs:
-#   - job: Testing
-#     displayName: 'Security Testing'
-#     steps:
-#     - script: |
-#         echo "Starting ZAP DAST..."
-#         docker pull owasp/zap2docker-stable
-#         docker run -t owasp/zap2docker-stable zap-baseline.py -t http://tuaplicacion.com
-#       displayName: 'Run ZAP'
 - stage: DAST
-  displayName: 'Run DAST Scan'
+  displayName: 'Dynamic Application Security Testing (DAST)'
   jobs:
-  - job: DastardlyScan
-    displayName: 'Run DAST Scan with Dastardly'
+  - job: OWASP_ZAP_Scan
+    displayName: 'OWASP ZAP Scan'
     steps:
-    - checkout: self
     - script: |
         echo "Pulling the latest ZAP stable image..."
         docker pull zaproxy/zap-stable:latest
@@ -199,12 +186,33 @@ stages:
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
         docker run --rm -u zap \
           -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk/:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r zap_report.html
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r zap_report.html -J $(Build.SourcesDirectory)/zap_reports/zap_output.json
 
-        echo "Scan completed. Reports are available in the zap_reports directory."
-      displayName: 'Execute DAST Scan'
-      env:
-        ZAP_OPTS: "-config api.disablekey=true"
+        echo "Scan completed. The JSON report is generated."
+      displayName: 'Run OWASP ZAP DAST Scan'
+
+    - script: |
+        echo "Printing ZAP Scan JSON output for review..."
+        cat $(Build.SourcesDirectory)/zap_reports/zap_output.json
+      displayName: 'Print ZAP Scan Results'
+
+    - script: |
+        echo "Analyzing ZAP Scan results..."
+        
+        fail_new=$(jq '.site[0].alerts[] | select(.riskcode == "3") | length' $(Build.SourcesDirectory)/zap_reports/zap_output.json)
+        fail_inprog=$(jq '.site[0].alerts[] | select(.riskcode == "2") | length' $(Build.SourcesDirectory)/zap_reports/zap_output.json)
+        
+        echo "Number of new FAIL alerts: $fail_new"
+        echo "Number of in-progress FAIL alerts: $fail_inprog"
+        
+        if [ "$fail_new" -gt 0 ] || [ "$fail_inprog" -gt 0 ]; then
+          echo "Error: There are new or in-progress FAIL alerts detected."
+          exit 1
+        else
+          echo "No FAIL alerts detected. Proceeding..."
+        fi
+      displayName: 'Analyze ZAP Scan Results'
+
 
 - stage: Prod_Deploy
   dependsOn: Image_Push

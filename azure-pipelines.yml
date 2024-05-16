@@ -187,6 +187,7 @@ stages:
 #       displayName: 'Run ZAP'
 - stage: DAST
   displayName: 'Run DAST Scan'
+  pool: Azure Pipelines
   jobs:
   - job: DastardlyScan
     displayName: 'Run DAST Scan with Dastardly'

@@ -188,11 +188,15 @@ stages:
 
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
         docker run --rm -u zap \
-          -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk/:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r zap_report.html -J $(Build.SourcesDirectory)/zap_reports/zap_output.json
+          -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html -J /zap/wrk/zap_output.json
 
-        echo "Scan completed. The JSON report is generated."
+        echo "Scan completed. Check the zap_reports directory for the JSON report."
       displayName: 'Run OWASP ZAP DAST Scan'
+    - script: |
+        echo "Displaying JSON Output..."
+        cat $(Build.SourcesDirectory)/zap_reports/zap_output.json
+      displayName: 'Print JSON Output'
 
     # - script: |
     #     echo "Printing ZAP Scan JSON output for review..."

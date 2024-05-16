@@ -187,24 +187,22 @@ stages:
         docker pull zaproxy/zap-stable:latest
 
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
-        docker run --rm \
-          -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html
+        output=$(docker run --rm -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html)
 
-        echo "Scan completed. Check the zap_reports directory for the HTML report."
-      displayName: 'Run OWASP ZAP DAST Scan'
+        echo "Scan completed. Output captured in the variable."
+        echo "$output"
+      displayName: 'Run OWASP ZAP DAST Scan and Capture Output'
     - script: |
-        echo "Analyzing ZAP Scan HTML report for High risk vulnerabilities..."
-        high_count=$(grep -o 'High</div></td><td align="center"><div>[^0]' $(Build.SourcesDirectory)/zap_reports/zap_report.html | wc -l)
-        
-        echo "Number of High vulnerabilities: $high_count"
-        if [ "$high_count" -gt 0 ]; then
-          echo "Error: High vulnerabilities detected. Number of High vulnerabilities: $high_count"
+        echo "Analyzing captured output for High risk vulnerabilities..."
+        if echo "$output" | grep -q "High"; then
+          echo "Error: High vulnerabilities detected in the output."
           exit 1
         else
-          echo "No High vulnerabilities detected. Proceeding..."
+          echo "No High vulnerabilities detected in the output. Proceeding..."
         fi
-      displayName: 'Analyze ZAP Scan Results'
+      displayName: 'Analyze Captured Output'
+
 
 
 - stage: Prod_Deploy

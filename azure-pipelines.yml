@@ -179,19 +179,19 @@ stages:
   - job: OWASP_ZAP_Scan
     displayName: 'OWASP ZAP Scan'
     steps:
-    # - script: |
-    #     mkdir -p $(Build.SourcesDirectory)/zap_reports
-    #   displayName: 'Ensure ZAP reports directory exists'
+    - script: |
+        mkdir -p $(Build.SourcesDirectory)/zap_reports
+      displayName: 'Ensure ZAP reports directory exists'
     - script: |
         echo "Pulling the latest ZAP stable image..."
         docker pull zaproxy/zap-stable:latest
 
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
-        docker run --rm -u zap \
+        docker run --rm \
           -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html -J /zap/wrk/zap_output.json
+          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r /zap/wrk/zap_report.html
 
-        echo "Scan completed. Check the zap_reports directory for the JSON report."
+        echo "Scan completed. Check the zap_reports directory for the HTML report."
       displayName: 'Run OWASP ZAP DAST Scan'
     - script: |
         echo "Analyzing ZAP Scan HTML report for High risk vulnerabilities..."
@@ -205,6 +205,7 @@ stages:
           echo "No High vulnerabilities detected. Proceeding..."
         fi
       displayName: 'Analyze ZAP Scan Results'
+
 
 - stage: Prod_Deploy
   dependsOn: Image_Push

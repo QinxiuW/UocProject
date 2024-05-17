@@ -38,7 +38,7 @@ stages:
       name: Qinxiu-Local
     steps:
     - script: |
-        output=$(docker run -t -v $(Build.SourcesDirectory):/src trufflesecurity/trufflehog --json --filesystem /src)
+        output=$(docker run --rm -t -v $(Build.SourcesDirectory):/src trufflesecurity/trufflehog --json --filesystem /src)
         # echo "$output" 
         if echo "$output" | grep -q '"verified_secrets": [^0]\|"unverified_secrets": [^0]'; then
           echo "Secrets found, failing the build"

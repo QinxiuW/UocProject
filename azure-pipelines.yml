@@ -201,9 +201,9 @@ stages:
     - script: |
         echo "Analyzing ZAP Scan HTML report for vulnerabilities..."
         echo $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html
-        high_risk_count=$(awk -v RS="</tr>" '/class="risk-3"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' zap_report.html | wc -l)
-        medium_risk_count=$(awk -v RS="</tr>" '/class="risk-2"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' zap_report.html | wc -l)
-        low_risk_count=$(awk -v RS="</tr>" '/class="risk-1"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' zap_report.html | wc -l)
+        high_risk_count=$(awk -v RS="</tr>" '/class="risk-3"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        medium_risk_count=$(awk -v RS="</tr>" '/class="risk-2"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
+        low_risk_count=$(awk -v RS="</tr>" '/class="risk-1"/ && /<div>[1-9][0-9]*<\/div>/{print $0}' $(Build.SourcesDirectory)/zap_reports/zap_report_$(Build.BuildId).html | wc -l)
 
         echo "Number of High vulnerabilities: $high_risk_count"
         echo "Number of Medium vulnerabilities: $medium_risk_count"

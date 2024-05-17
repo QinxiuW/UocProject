@@ -206,11 +206,11 @@ stages:
           echo "No High vulnerabilities detected. Proceeding..."
         fi
       displayName: 'Analyze ZAP Report for Vulnerabilities'
-    # - script: |
-    #     echo "Stopping and removing Docker container..."
-    #     docker stop lab-app
-    #     docker rm lab-app
-    #   displayName: 'Cleanup Docker container'
+    - script: |
+        echo "Stopping and removing Docker container..."
+        docker stop lab-app
+        docker rm lab-app
+      displayName: 'Cleanup Docker container'
 
 - stage: Image_Push
   dependsOn: DAST

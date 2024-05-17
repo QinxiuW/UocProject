@@ -148,38 +148,28 @@ stages:
         fi
       displayName: 'Fail on FATAL Issues'
 
-- stage: Image_Push
-  dependsOn: Image_Hardening
-  displayName: Image Push
-  pool: Azure Pipelines
-  jobs:
-  - job: Push
-    displayName:  'Image Push'
-    steps:
-    - task: Docker@2
-      displayName: push
-      inputs:
-        containerRegistry: 'docker-registry-bcn'
-        repository: 'lab-app'
-        tags: '$(Build.BuildId)'
-
-- stage: Stage_Env_Deploy
-  dependsOn: Image_Push
-  displayName: Stage Deployment
-  jobs:
-  - job: Deploy
-    displayName:  'Stage Deploy'
-    steps:
-    - script: 'echo deploy'
-      displayName: 'Command Line Script'
+# - stage: Stage_Env_Deploy
+#   dependsOn: Image_Push
+#   displayName: Stage Deployment
+#   jobs:
+#   - job: Deploy
+#     displayName:  'Stage Deploy'
+#     steps:
+#     - script: 'echo deploy'
+#       displayName: 'Command Line Script'
       
 - stage: DAST
-  dependsOn: Stage_Env_Deploy
+  dependsOn: Image_Hardening
   displayName: 'Dynamic Application Security Testing (DAST)'
   jobs:
   - job: OWASP_ZAP_Scan
     displayName: 'OWASP ZAP Scan'
     steps:
+    - script: |
+        echo "Starting Docker container..."
+        docker run --name lab-app -d -p 8081:8081 lab-app:$(Build.BuildId)
+      displayName: 'Start Docker container'
+
     - script: |
         echo "Creating directory for ZAP reports..."
         mkdir -p $(System.DefaultWorkingDirectory)/zap_reports
@@ -193,7 +183,7 @@ stages:
     - script: |
         echo "Running OWASP ZAP DAST scan on $(url_to_scan)..."
         output=$(docker run --rm -v $(Build.SourcesDirectory)/zap_reports:/zap/wrk:rw \
-          zaproxy/zap-stable:latest zap-baseline.py -t $(url_to_scan) -r zap_report_$(Build.BuildId).html)
+          zaproxy/zap-stable:latest zap-baseline.py -t 'http://locahost:8081/index' -r zap_report_$(Build.BuildId).html)
         echo "Scan completed. Output captured in the variable."
         echo "$output"
       displayName: 'Run OWASP ZAP DAST Scan and Capture Output'
@@ -216,6 +206,26 @@ stages:
           echo "No High vulnerabilities detected. Proceeding..."
         fi
       displayName: 'Analyze ZAP Report for Vulnerabilities'
+    - script: |
+        echo "Stopping and removing Docker container..."
+        docker stop lab-app
+        docker rm lab-app
+      displayName: 'Cleanup Docker container'
+
+- stage: Image_Push
+  dependsOn: DAST
+  displayName: Image Push
+  pool: Azure Pipelines
+  jobs:
+  - job: Push
+    displayName:  'Image Push'
+    steps:
+    - task: Docker@2
+      displayName: push
+      inputs:
+        containerRegistry: 'docker-registry-bcn'
+        repository: 'lab-app'
+        tags: '$(Build.BuildId)'
 
 - stage: Prod_Env_Deploy
   dependsOn: DAST

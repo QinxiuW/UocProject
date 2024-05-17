@@ -227,12 +227,12 @@ stages:
         repository: 'lab-app'
         tags: '$(Build.BuildId)'
 
-- stage: Prod_Env_Deploy
-  dependsOn: DAST
-  displayName: Prod Deployment
+- stage: Deploy
+  dependsOn: Image_Push
+  displayName: Deploy
   jobs:
   - job: Deploy
-    displayName:  'Prod Deploy'
+    displayName:  'Deploy'
     steps:
     - script: 'echo deploy'
       displayName: 'Command Line Script'

@@ -115,7 +115,7 @@ stages:
         echo "Number of critical vulnerabilities: $critical_count"
         echo "Number of high vulnerabilities: $high_count"
         
-        if [ "$critical_count" -gt 20 ]; then
+        if [ "$critical_count" -gt 1 ]; then
           echo "Error: Number of critical vulnerabilities ($critical_count) exceeds the threshold."
           exit 1
         fi

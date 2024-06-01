@@ -131,15 +131,18 @@ stages:
     - script: |
         dockle --format json lab-app:$(Build.BuildId) > dockle-results-$(Build.BuildId).json
       displayName: 'Run Dockle Scan'
+
     - script: |
         warn_count=$(jq '[.details[] | select(.level == "WARN")] | length' dockle-results-$(Build.BuildId).json)
         fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
         echo "Number of WARN issues: $warn_count"
         echo "Number of FATAL issues: $fatal_count"
       displayName: 'Count WARN and FATAL Issues'
+
     - script: |
         cat dockle-results-$(Build.BuildId).json
       displayName: 'Print Entire Dockle Results JSON'
+
     - script: |
         fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
         if [ "$fatal_count" -gt 0 ]; then
@@ -148,16 +151,6 @@ stages:
         fi
       displayName: 'Fail on FATAL Issues'
 
-# - stage: Stage_Env_Deploy
-#   dependsOn: Image_Push
-#   displayName: Stage Deployment
-#   jobs:
-#   - job: Deploy
-#     displayName:  'Stage Deploy'
-#     steps:
-#     - script: 'echo deploy'
-#       displayName: 'Command Line Script'
-      
 - stage: DAST
   dependsOn: Image_Hardening
   displayName: 'Dynamic Application Security Testing (DAST)'

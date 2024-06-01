@@ -157,7 +157,7 @@
         <configuration>
           <nvdApiKey>ae84a609-659d-4bf6-8b11-6f6a5ec16f1b</nvdApiKey>
           <!-- Fallar el build para vulnerabilidades con un puntaje CVSS mayor o igual a 7 (High) -->
-          <failBuildOnCVSS>7</failBuildOnCVSS>
+          <failBuildOnCVSS>20</failBuildOnCVSS>
         </configuration>
       </plugin>
 

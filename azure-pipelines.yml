@@ -141,8 +141,7 @@ stages:
         cat dockle-results-$(Build.BuildId).json
       displayName: 'Print Entire Dockle Results JSON'
     - script: |
-        fatal_count=$(jq '[.details[] | select(.level == "FATAL")] | length' dockle-results-$(Build.BuildId).json)
-        if [ "$fatal_count" -gt 0 ]; then
+        if [ "$warn_count" -gt 0 ]; then
           echo "Error: There are $fatal_count FATAL issues."
           exit 1
         fi

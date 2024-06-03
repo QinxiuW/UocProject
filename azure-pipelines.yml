@@ -199,7 +199,7 @@ stages:
         echo "Number of Medium vulnerabilities: $medium_risk_count"
         echo "Number of Low vulnerabilities: $low_risk_count"
         
-        if [ "$high_risk_count" -gt 0 ]; then
+        if [ "$low_risk_count" -gt 0 ]; then
           echo "Error: High vulnerabilities detected. Number of High vulnerabilities: $high_risk_count"
           exit 1
         else

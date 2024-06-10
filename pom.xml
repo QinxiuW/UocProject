@@ -11,9 +11,9 @@
   </parent>
 
   <groupId>com.qinxiu</groupId>
-  <artifactId>patterson</artifactId>
+  <artifactId>uoc</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>patterson</name>
+  <name>uoc</name>
 
 
   <description>Demo project for Spring Boot</description>

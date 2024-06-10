@@ -147,16 +147,6 @@ stages:
           exit 1
         fi
       displayName: 'Fail on FATAL Issues'
-
-# - stage: Stage_Env_Deploy
-#   dependsOn: Image_Push
-#   displayName: Stage Deployment
-#   jobs:
-#   - job: Deploy
-#     displayName:  'Stage Deploy'
-#     steps:
-#     - script: 'echo deploy'
-#       displayName: 'Command Line Script'
       
 - stage: DAST
   dependsOn: Image_Hardening

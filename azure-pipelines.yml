@@ -238,7 +238,7 @@ stages:
     - script: |
         #!/bin/bash
 
-        REPO_URL="https://$(CREDENTIALS)@${ARGO_CD_REPO_URL}"
+        REPO_URL="https://${CREDENTIALS}@${ARGO_CD_REPO_URL}"
 
         git config --global credential.useHttpPath true
         git config --global http.sslVerify false
@@ -263,3 +263,5 @@ stages:
         cd ..
         rm -rf temp_repo
       displayName: 'Run Deployment Script'
+      env:
+        CREDENTIALS: $(CREDENTIALS)

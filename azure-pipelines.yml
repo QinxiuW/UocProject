@@ -229,6 +229,7 @@ stages:
 
 - stage: Deploy
   dependsOn: Image_Push
+  pool: Azure Pipelines
   displayName: Deploy
   jobs:
   - job: Deploy

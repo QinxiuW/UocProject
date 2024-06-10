@@ -232,7 +232,33 @@ stages:
   displayName: Deploy
   jobs:
   - job: Deploy
-    displayName:  'Deploy'
+    displayName: 'Deploy'
     steps:
-    - script: 'echo deploy'
-      displayName: 'Command Line Script'
+    - script: |
+        #!/bin/bash
+
+        REPO_URL="https://$(CREDENTIALS)@${ARGO_CD_REPO_URL}"
+
+        git config --global credential.useHttpPath true
+        git config --global http.sslVerify false
+        git config --global http.https://dev.azure.com.sslVerify false
+        git config --global user.name "$(Build.RequestedFor)"
+        git config --global user.email "$(Build.RequestedForEmail)"
+        git commit --amend --reset-author
+
+        export GCM_INTERACTIVE=false
+
+        git clone "$REPO_URL" temp_repo || exit 1
+        cd temp_repo
+
+        # Intentar realizar un pull, pero no fallar si no hay cambios para actualizar
+        git pull || true
+
+        (cd components/${PROJECT_NAME} && kustomize edit set image ${IMAGE_URL}:$(Build.BuildId))
+        git add .
+        git commit -m "update ${PROJECT_NAME} to tag $(Build.BuildId)"
+        git push
+
+        cd ..
+        rm -rf temp_repo
+      displayName: 'Run Deployment Script'
